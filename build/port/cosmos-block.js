@@ -176,20 +176,36 @@ function placeAll(instant){
     target = sys ? new THREE.Vector3() : c;
     dist = sys ? 46 : Math.max(22, rad * 2.9 + 10);
   }
-  T.controls.minDistance = mem ? Math.min(8, dist * .4) : 30; T.controls.maxDistance = mem ? dist * 3 : 360;
-  flyCamera(target, dist, instant);
+  flyCamera(target, dist, instant, [mem ? Math.min(8, dist * .4) : 30, mem ? dist * 3 : 360]);
   $('#crumb').innerHTML = gid == null ? '태양계' : '태양계 <span>›</span> ' + esc(groupName(gid));
   $('#bBack').hidden = gid == null;
   $('#maphint').textContent = gid == null ? '천체를 누르면 그 묶음이 펼쳐집니다' : '천체를 눌러 부르기 · Esc 나 ← 뒤로가기';
   drawStems();
 }
-function flyCamera(target, dist, instant){
+/* 움직임은 한 번에 하나 — 새로 시작하기 전에 하던 것을 끝자리로 마치고 한도도 건다.
+   (덮어쓰면 기울기 한도가 안 걸려 돌리기가 막히거나, 반쯤 옮긴 중심에서 다음 움직임이 출발한다) */
+function finishFlying(){
+  var f = flying; if (!f) return;
+  flying = null;
+  if (f.tilt) {
+    T.camera.position.copy(T.controls.target).add(new THREE.Vector3().setFromSpherical(new THREE.Spherical(f.r, f.phi1, f.theta)));
+    if (f.done) f.done();
+  } else {
+    T.camera.position.copy(f.p1); T.controls.target.copy(f.t1v);
+    T.controls.minDistance = f.lim[0]; T.controls.maxDistance = f.lim[1];
+  }
+  T.controls.update();
+}
+/* 거리 한도는 날아간 뒤에 건다 — 먼저 걸면 첫 프레임에 카메라가 한도 안으로 툭 끌려온다 */
+function flyCamera(target, dist, instant, lim){
   var cam = T.camera, ctl = T.controls;
+  finishFlying();
   var dir = cam.position.clone().sub(ctl.target); if (dir.lengthSq() < 1e-6) dir.set(0, 1, 1);
   dir.normalize();
   var to = target.clone().add(dir.multiplyScalar(dist));
-  if (instant) { cam.position.copy(to); ctl.target.copy(target); ctl.update(); return; }
-  flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:target.clone() };
+  if (instant) { ctl.minDistance = lim[0]; ctl.maxDistance = lim[1]; cam.position.copy(to); ctl.target.copy(target); ctl.update(); return; }
+  ctl.minDistance = 0; ctl.maxDistance = Infinity;
+  flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:target.clone(), lim:lim };
 }
 /* 3D ↔ 2D — 거리는 그대로 두고 기울기만 둥글게 바꾼다. 기울기 한도는 움직임이 끝난 뒤에 건다
    (먼저 걸면 OrbitControls 가 카메라를 한도 안으로 툭 끌어당겨 어색하다) */
@@ -207,6 +223,7 @@ function setDim(v, instant){
   });
 }
 function tiltTo(deg, instant, done){
+  finishFlying();
   var ctl = T.controls, cam = T.camera, off = cam.position.clone().sub(ctl.target);
   var sph = new THREE.Spherical().setFromVector3(off), to = deg * Math.PI / 180;
   if (instant) { sph.phi = to; cam.position.copy(ctl.target).add(new THREE.Vector3().setFromSpherical(sph)); ctl.update(); if (done) done(); return; }
@@ -215,7 +232,7 @@ function tiltTo(deg, instant, done){
 /* 새 판 — 태양계 전체 화면, 고른 것·올린 것 없이. 오늘 판에서 펼친 행성계가 이어지지 않게 */
 function resetView(){
   if (!T) return;
-  VIEW.gid = null; armed = null;
+  VIEW.gid = null; VIEW.shown = null; armed = null;
   setHover(null); selectBody(null);
   placeAll(true);
   T.ringMix = T.ringMixDst; T.light.position.copy(T.lightDst);
@@ -227,7 +244,7 @@ function openGroup(gid, focusI){
   if (gid == null) selectBody(null);
   placeAll(false);
   paintMap();
-  if (focusI != null && gid != null) { setHover(focusI); selectBody(focusI); }
+  if (focusI != null && gid != null) { setHover(focusI); selectBody(focusI); if (touch) armed = focusI; }   // 펼칠 때 누른 것이 첫 번째 누르기
 }
 /* 한 프레임 — 자리·투명도·크기를 목표로 조금씩 */
 function step(){
@@ -240,7 +257,7 @@ function step(){
   } else if (flying) {
     var k = Math.min(1, (now - flying.t0) / 750), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     T.camera.position.lerpVectors(flying.p0, flying.p1, e); T.controls.target.lerpVectors(flying.t0v, flying.t1v, e);
-    if (k >= 1) flying = null;
+    if (k >= 1) finishFlying();
   }
   T.light.position.lerp(T.lightDst, .12);
   T.ringMix += (T.ringMixDst - T.ringMix) * .12;
@@ -263,7 +280,7 @@ function step(){
   }
 }
 function drawStems(){
-  while (T.stems.children.length) T.stems.remove(T.stems.children[0]);
+  while (T.stems.children.length) { var o = T.stems.children[0]; T.stems.remove(o); o.geometry.dispose(); o.material.dispose(); }
   var sys = VIEW.gid && GROUP_META[VIEW.gid].type === 'system';
   U.forEach(function(u, i){
     if (T.opDst[i] < .5) return;
@@ -335,7 +352,7 @@ function drawLabels(){
   if (HOV != null && T.op[HOV] > .5) {
     var s2 = screenOf(HOV), hu = U[HOV], gg = guessOf(hu.id);
     tip.innerHTML = esc(hu.name) + '<small>' + (VIEW.gid == null ? esc(groupName(SKYG[HOV])) + ' · 눌러서 펼치기'
-      : gg ? (gg.correct ? '정답' : pts(gg.score) + ' · ' + gg.rank + '번째') : (touch && armed === HOV ? '한 번 더 누르면 부르기' : KIND[hu.kind] + ' · 눌러서 부르기')) + '</small>';
+      : gg ? (gg.correct ? '정답' : pts(gg.score) + ' · ' + gg.rank + '번째') : (S.solved || S.gaveup ? KIND[hu.kind] : touch && armed === HOV ? '한 번 더 누르면 부르기' : KIND[hu.kind] + ' · 눌러서 부르기')) + '</small>';
     tip.style.left = s2[0] + 'px'; tip.style.top = (s2[1] - 10) + 'px'; tip.hidden = false;
   } else tip.hidden = true;
 }
@@ -381,7 +398,8 @@ function heatHex(rank){ var m = heat(rank).match(/\d+/g); return m.slice(0, 3).m
 function paintMap(){
   if (!T) return;
   for (var i = 0; i < U.length; i++) if (i !== HOV && !textured(i)) T.meshes[i].material.color.setHex(colorOf(i));
-  if (S.answer && VIEW.gid !== SKYG[BY[S.answer.id]]) openGroup(SKYG[BY[S.answer.id]], BY[S.answer.id]);
+  /* 판이 끝나면 정답 묶음을 한 번만 펼쳐 준다 — 그 뒤로는 뒤로가기로 다른 묶음도 둘러볼 수 있게 */
+  if (S.answer && VIEW.shown !== S.answer.id) { VIEW.shown = S.answer.id; if (VIEW.gid !== SKYG[BY[S.answer.id]]) openGroup(SKYG[BY[S.answer.id]], BY[S.answer.id]); }
   $('#go').disabled = SEL == null || S.solved || S.gaveup || VIEW.gid == null;
 }
 

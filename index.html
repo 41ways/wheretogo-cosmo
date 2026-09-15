@@ -170,7 +170,11 @@ h1 .no{font-family:var(--mono);font-size:.4em;font-weight:400;color:var(--faint)
 .dex-got{margin-top:6px;font-family:var(--mono);font-size:11.5px;color:var(--accent)}
 .dex-credit{margin-top:6px;font-size:9.5px;color:var(--faint);opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .dex-empty{grid-column:1/-1;align-self:center;text-align:center;font-size:12.5px;color:var(--faint);line-height:1.8}
-@media (max-width:820px){ .dex{min-height:0} .dex:has(.dex-empty){padding:9px 12px} }
+/* 폰에서는 도감이 지도 위에 있다 — 높이가 천체마다 바뀌면 두 번 누르는 사이 지도가 밀리므로 높이를 못 박는다 */
+@media (max-width:820px){ .dex{grid-template-columns:76px 1fr;height:120px;min-height:0;overflow:hidden;padding:10px 12px}
+  .dex-img{width:76px;height:76px} .dex-name{font-size:19px}
+  .dex-desc{margin-top:5px;font-size:12px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .dex-facts,.dex-credit{display:none} .dex-got{margin-top:3px} }
 .field input[readonly]{cursor:default}
 .map path{fill:var(--land);stroke:var(--land-line);stroke-width:.7px;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .5s}
 .map path.hit{stroke:rgba(60,40,20,.55);cursor:pointer}
@@ -718,20 +722,36 @@ function placeAll(instant){
     target = sys ? new THREE.Vector3() : c;
     dist = sys ? 46 : Math.max(22, rad * 2.9 + 10);
   }
-  T.controls.minDistance = mem ? Math.min(8, dist * .4) : 30; T.controls.maxDistance = mem ? dist * 3 : 360;
-  flyCamera(target, dist, instant);
+  flyCamera(target, dist, instant, [mem ? Math.min(8, dist * .4) : 30, mem ? dist * 3 : 360]);
   $('#crumb').innerHTML = gid == null ? '태양계' : '태양계 <span>›</span> ' + esc(groupName(gid));
   $('#bBack').hidden = gid == null;
   $('#maphint').textContent = gid == null ? '천체를 누르면 그 묶음이 펼쳐집니다' : '천체를 눌러 부르기 · Esc 나 ← 뒤로가기';
   drawStems();
 }
-function flyCamera(target, dist, instant){
+/* 움직임은 한 번에 하나 — 새로 시작하기 전에 하던 것을 끝자리로 마치고 한도도 건다.
+   (덮어쓰면 기울기 한도가 안 걸려 돌리기가 막히거나, 반쯤 옮긴 중심에서 다음 움직임이 출발한다) */
+function finishFlying(){
+  var f = flying; if (!f) return;
+  flying = null;
+  if (f.tilt) {
+    T.camera.position.copy(T.controls.target).add(new THREE.Vector3().setFromSpherical(new THREE.Spherical(f.r, f.phi1, f.theta)));
+    if (f.done) f.done();
+  } else {
+    T.camera.position.copy(f.p1); T.controls.target.copy(f.t1v);
+    T.controls.minDistance = f.lim[0]; T.controls.maxDistance = f.lim[1];
+  }
+  T.controls.update();
+}
+/* 거리 한도는 날아간 뒤에 건다 — 먼저 걸면 첫 프레임에 카메라가 한도 안으로 툭 끌려온다 */
+function flyCamera(target, dist, instant, lim){
   var cam = T.camera, ctl = T.controls;
+  finishFlying();
   var dir = cam.position.clone().sub(ctl.target); if (dir.lengthSq() < 1e-6) dir.set(0, 1, 1);
   dir.normalize();
   var to = target.clone().add(dir.multiplyScalar(dist));
-  if (instant) { cam.position.copy(to); ctl.target.copy(target); ctl.update(); return; }
-  flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:target.clone() };
+  if (instant) { ctl.minDistance = lim[0]; ctl.maxDistance = lim[1]; cam.position.copy(to); ctl.target.copy(target); ctl.update(); return; }
+  ctl.minDistance = 0; ctl.maxDistance = Infinity;
+  flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:target.clone(), lim:lim };
 }
 /* 3D ↔ 2D — 거리는 그대로 두고 기울기만 둥글게 바꾼다. 기울기 한도는 움직임이 끝난 뒤에 건다
    (먼저 걸면 OrbitControls 가 카메라를 한도 안으로 툭 끌어당겨 어색하다) */
@@ -749,6 +769,7 @@ function setDim(v, instant){
   });
 }
 function tiltTo(deg, instant, done){
+  finishFlying();
   var ctl = T.controls, cam = T.camera, off = cam.position.clone().sub(ctl.target);
   var sph = new THREE.Spherical().setFromVector3(off), to = deg * Math.PI / 180;
   if (instant) { sph.phi = to; cam.position.copy(ctl.target).add(new THREE.Vector3().setFromSpherical(sph)); ctl.update(); if (done) done(); return; }
@@ -757,7 +778,7 @@ function tiltTo(deg, instant, done){
 /* 새 판 — 태양계 전체 화면, 고른 것·올린 것 없이. 오늘 판에서 펼친 행성계가 이어지지 않게 */
 function resetView(){
   if (!T) return;
-  VIEW.gid = null; armed = null;
+  VIEW.gid = null; VIEW.shown = null; armed = null;
   setHover(null); selectBody(null);
   placeAll(true);
   T.ringMix = T.ringMixDst; T.light.position.copy(T.lightDst);
@@ -769,7 +790,7 @@ function openGroup(gid, focusI){
   if (gid == null) selectBody(null);
   placeAll(false);
   paintMap();
-  if (focusI != null && gid != null) { setHover(focusI); selectBody(focusI); }
+  if (focusI != null && gid != null) { setHover(focusI); selectBody(focusI); if (touch) armed = focusI; }   // 펼칠 때 누른 것이 첫 번째 누르기
 }
 /* 한 프레임 — 자리·투명도·크기를 목표로 조금씩 */
 function step(){
@@ -782,7 +803,7 @@ function step(){
   } else if (flying) {
     var k = Math.min(1, (now - flying.t0) / 750), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     T.camera.position.lerpVectors(flying.p0, flying.p1, e); T.controls.target.lerpVectors(flying.t0v, flying.t1v, e);
-    if (k >= 1) flying = null;
+    if (k >= 1) finishFlying();
   }
   T.light.position.lerp(T.lightDst, .12);
   T.ringMix += (T.ringMixDst - T.ringMix) * .12;
@@ -805,7 +826,7 @@ function step(){
   }
 }
 function drawStems(){
-  while (T.stems.children.length) T.stems.remove(T.stems.children[0]);
+  while (T.stems.children.length) { var o = T.stems.children[0]; T.stems.remove(o); o.geometry.dispose(); o.material.dispose(); }
   var sys = VIEW.gid && GROUP_META[VIEW.gid].type === 'system';
   U.forEach(function(u, i){
     if (T.opDst[i] < .5) return;
@@ -877,7 +898,7 @@ function drawLabels(){
   if (HOV != null && T.op[HOV] > .5) {
     var s2 = screenOf(HOV), hu = U[HOV], gg = guessOf(hu.id);
     tip.innerHTML = esc(hu.name) + '<small>' + (VIEW.gid == null ? esc(groupName(SKYG[HOV])) + ' · 눌러서 펼치기'
-      : gg ? (gg.correct ? '정답' : pts(gg.score) + ' · ' + gg.rank + '번째') : (touch && armed === HOV ? '한 번 더 누르면 부르기' : KIND[hu.kind] + ' · 눌러서 부르기')) + '</small>';
+      : gg ? (gg.correct ? '정답' : pts(gg.score) + ' · ' + gg.rank + '번째') : (S.solved || S.gaveup ? KIND[hu.kind] : touch && armed === HOV ? '한 번 더 누르면 부르기' : KIND[hu.kind] + ' · 눌러서 부르기')) + '</small>';
     tip.style.left = s2[0] + 'px'; tip.style.top = (s2[1] - 10) + 'px'; tip.hidden = false;
   } else tip.hidden = true;
 }
@@ -923,7 +944,8 @@ function heatHex(rank){ var m = heat(rank).match(/\d+/g); return m.slice(0, 3).m
 function paintMap(){
   if (!T) return;
   for (var i = 0; i < U.length; i++) if (i !== HOV && !textured(i)) T.meshes[i].material.color.setHex(colorOf(i));
-  if (S.answer && VIEW.gid !== SKYG[BY[S.answer.id]]) openGroup(SKYG[BY[S.answer.id]], BY[S.answer.id]);
+  /* 판이 끝나면 정답 묶음을 한 번만 펼쳐 준다 — 그 뒤로는 뒤로가기로 다른 묶음도 둘러볼 수 있게 */
+  if (S.answer && VIEW.shown !== S.answer.id) { VIEW.shown = S.answer.id; if (VIEW.gid !== SKYG[BY[S.answer.id]]) openGroup(SKYG[BY[S.answer.id]], BY[S.answer.id]); }
   $('#go').disabled = SEL == null || S.solved || S.gaveup || VIEW.gid == null;
 }
 
@@ -986,11 +1008,11 @@ function guess(i){
     return;
   }
   S.busy = true; msg('…');
-  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id })
+  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id, day:S.day })
                     : api('/api/guess', { day:S.day, pid:PID, id:u.id, name:lsGet('cosmos-name') || '' });
   call.then(function(r){
     S.busy = false;
-    if (r.closed) { return load(); }
+    if (r.closed) { return load().then(function(){ if ((S.solved || S.gaveup) && $('#title').hidden) backToTitle(); }); }
     if (!S.started) S.started = now();
     S.list.push({ id:r.id, score:r.score, rank:r.rank, correct:r.correct, km:r.km, no:S.list.length + 1 });
     selectBody(null);
@@ -1002,8 +1024,8 @@ function guess(i){
     }
     msg('');
     render();
-    if (S.solved) { celebrate(); setTimeout(openDone, 520); }
-    else $('#q').focus();
+    if (S.solved) { var round = S.free; celebrate(); setTimeout(function(){ if (S.free === round && S.solved && !$('#game').hidden) openDone(); }, 520); }
+    else if (matchMedia('(hover:hover)').matches) $('#q').focus();   // 손가락으로 누른 뒤 자판이 올라와 화면이 밀리지 않게
   }).catch(function(e){
     S.busy = false;
     msg(e.status === 409 ? '날짜가 바뀌었습니다 — 새로고침해 주세요' : '못 보냈습니다: ' + e.message, true);
@@ -1019,7 +1041,9 @@ function giveup(){
 }
 
 // ══════════════════════════════ 그리기
+var disarm = function(){};   // 손가락으로 한 번 눌러 둔 칸 — 판이 바뀌거나 무엇이든 부르면 풀린다
 function render(){
+  disarm();
   $('#no').textContent = S.free ? (S.hard ? '하드 모드' : '무한 모드') : (S.no ? '제' + S.no + '호' : '');
   var done = S.solved || S.gaveup;
   $('#askform').hidden = done;
@@ -1132,7 +1156,7 @@ function saveName(){
     S.board = b;
     if (b.tag) lsSet('cosmos-tag', b.tag);
     var ns = $('#nameSave'); if (ns) ns.textContent = b.tag ? b.tag + ' ✓' : '저장됨 ✓';
-    setTimeout(backToTitle, b.tag ? 900 : 600);
+    setTimeout(function(){ if (!S.free && (S.solved || S.gaveup)) backToTitle(); }, b.tag ? 900 : 600);
   }).catch(function(e){ alert('이름을 못 올렸습니다: ' + e.message); });
 }
 
@@ -1305,9 +1329,11 @@ function titleFinished(){
 /* 무한 모드·하드 모드 — 오늘 판은 잠시 치워 두고 새 판을 연다. 기록은 서버에 남지 않는다.
    하드 모드는 같은 연습 판에서 지도 도움만 끈 것이다 — 이름을 적어서만 부른다 */
 function startFree(hard){
-  var b = $(hard ? '#btnHard' : '#btnFree'), label = b.textContent;
+  var b = $(hard ? '#btnHard' : '#btnFree'), label = b.textContent, fromTitle = !$('#title').hidden;
   b.disabled = true; b.textContent = '여는 중…';
   api('/api/free').then(function(r){
+    /* 기다리는 사이 타이틀을 떠났으면(시작을 눌러 오늘 판으로) 이 판은 버린다 — 오늘 판 기록이 연습 판에 섞이지 않게 */
+    if (fromTitle && $('#title').hidden) { b.disabled = false; b.textContent = label; return; }
     if (!S.free) S.daily = { list:S.list, solved:S.solved, gaveup:S.gaveup, started:S.started, elapsed:S.elapsed,
                              answer:S.answer, order:S.order, board:S.board, lastId:S.lastId };
     S.free = r.rid; S.hard = !!hard; S.list = []; S.solved = false; S.gaveup = false;
@@ -1317,7 +1343,8 @@ function startFree(hard){
     startGame();
   }).catch(function(e){
     b.disabled = false; b.textContent = label;
-    msg('연습 판을 못 열었습니다: ' + e.message, true);
+    var t = '연습 판을 못 열었습니다: ' + e.message;
+    if (fromTitle) { $('#terr').hidden = false; $('#terr').textContent = t; } else msg(t, true);
   });
 }
 function endFree(){

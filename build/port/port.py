@@ -82,7 +82,11 @@ rep('.map{position:relative;background:var(--sea);border:1px solid var(--line)}\
 .dex-got{margin-top:6px;font-family:var(--mono);font-size:11.5px;color:var(--accent)}
 .dex-credit{margin-top:6px;font-size:9.5px;color:var(--faint);opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .dex-empty{grid-column:1/-1;align-self:center;text-align:center;font-size:12.5px;color:var(--faint);line-height:1.8}
-@media (max-width:820px){ .dex{min-height:0} .dex:has(.dex-empty){padding:9px 12px} }
+/* 폰에서는 도감이 지도 위에 있다 — 높이가 천체마다 바뀌면 두 번 누르는 사이 지도가 밀리므로 높이를 못 박는다 */
+@media (max-width:820px){ .dex{grid-template-columns:76px 1fr;height:120px;min-height:0;overflow:hidden;padding:10px 12px}
+  .dex-img{width:76px;height:76px} .dex-name{font-size:19px}
+  .dex-desc{margin-top:5px;font-size:12px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .dex-facts,.dex-credit{display:none} .dex-got{margin-top:3px} }
 .field input[readonly]{cursor:default}''')
 rep('.legend i{flex:1;height:6px;background:linear-gradient(90deg,#e0301e,#e96e5a 28%,#f0b6aa 60%,#b9b7b0)}',
     '.legend i{flex:1;height:6px;background:linear-gradient(90deg,#f2c14e,#d6b36a 22%,#9a9ab0 55%,#5a6690)}')
@@ -161,7 +165,7 @@ function cho(s){ return s; }
 
 ''')
 block('function submit(){', '\n// ══════════════════════════════ 부르기', 'function submit(){ callSelected(); }\n')
-rep("  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id })", "  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id })")
+rep("  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id })", "  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id, day:S.day })")
 rep("    S.list.push({ id:r.id, score:r.score, rank:r.rank, correct:r.correct, no:S.list.length + 1 });",
     "    S.list.push({ id:r.id, score:r.score, rank:r.rank, correct:r.correct, km:r.km, no:S.list.length + 1 });\n    selectBody(null);")
 rep("      '<div class=\"nm\">' + esc(u.name) + '<small>' + esc(u.sub) + '</small></div>' +", "      '<div class=\"nm\">' + esc(u.name) + '<small>' + esc(KIND[u.kind]) + '</small></div>' +")
