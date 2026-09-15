@@ -134,8 +134,8 @@ block('      <li>매일 자정(한국 시간)에 전국', '    </ul>', '''      
       <li>시계는 <b>첫 추측부터</b> 정답까지 서버가 잽니다. 순위는 <b>적게 부른 순</b>, 횟수가 같으면 빠른 순입니다. 포기하면 순위에 오르지 않습니다.</li>
 ''')
 
-# ── 이지 모드 없음 — 이름을 보고 누르는 게임이라 따로 쉬운 판이 필요 없다
-rep('<button class="start ghost" id="btnEasy">이지 모드</button>', '<button class="start ghost" id="btnEasy" hidden>이지 모드</button>')
+# ── 하드 모드 없음 — 이름을 적어 부르는 칸이 없으니 도움을 끈 판이 따로 없다
+rep('<button class="start ghost" id="btnHard">하드 모드</button>', '<button class="start ghost" id="btnHard" hidden>하드 모드</button>')
 
 # ── 새 판을 열 때마다 태양계 전체 화면으로 — 오늘 판에서 펼친 행성계가 무한 모드로 이어지지 않게
 rep("function startGame(){\n  $('#title').hidden = true;\n  $('#game').hidden = false;", "function startGame(){\n  $('#title').hidden = true;\n  $('#game').hidden = false;\n  resetView();")
@@ -145,7 +145,7 @@ rep('<script>\n(function(){', '<script src="https://cdn.jsdelivr.net/npm/three@0
 rep("var API = /^(localhost|127\\.0\\.0\\.1)$/.test(location.hostname) ? 'http://localhost:8832' : 'https://eodigun.41ways.workers.dev';",
     "var API = /^(localhost|127\\.0\\.0\\.1)$/.test(location.hostname) ? 'http://localhost:8837' : 'https://wheretogo-cosmos.41ways.workers.dev';")
 rep("var SHARE_URL = 'https://41ways.github.io/wheretogo/';", "var SHARE_URL = 'https://41ways.github.io/wheretogo-cosmo/';")
-s = s.replace("'eodigun-", "'cosmos-").replace("'wheretogo-free'", "'cosmos-free'").replace("'wheretogo-easy'", "'cosmos-easy'")
+s = s.replace("'eodigun-", "'cosmos-").replace("'wheretogo-free'", "'cosmos-free'").replace("'wheretogo-hard'", "'cosmos-hard'")
 rep('  day:null, no:null, n:165, offset:0,', '  day:null, no:null, n:127, offset:0,')
 rep('var STOPS = [[0,[185,183,176]],[.55,[240,182,170]],[.82,[233,110,90]],[1,[224,48,30]]];', 'var STOPS = [[0,[90,102,144]],[.55,[154,154,176]],[.82,[214,179,106]],[1,[242,193,78]]];')
 rep("  if (rank <= 30) return '가까움';\n  if (rank <= 70) return '그럭저럭';\n  if (rank <= 120) return '멂';\n  return '아주 멂';",
@@ -161,7 +161,7 @@ function cho(s){ return s; }
 
 ''')
 block('function submit(){', '\n// ══════════════════════════════ 부르기', 'function submit(){ callSelected(); }\n')
-rep("  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id })", "  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id, easy:!!S.easy })")
+rep("  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id })", "  var call = S.free ? api('/api/free/guess', { rid:S.free, id:u.id })")
 rep("    S.list.push({ id:r.id, score:r.score, rank:r.rank, correct:r.correct, no:S.list.length + 1 });",
     "    S.list.push({ id:r.id, score:r.score, rank:r.rank, correct:r.correct, km:r.km, no:S.list.length + 1 });\n    selectBody(null);")
 rep("      '<div class=\"nm\">' + esc(u.name) + '<small>' + esc(u.sub) + '</small></div>' +", "      '<div class=\"nm\">' + esc(u.name) + '<small>' + esc(KIND[u.kind]) + '</small></div>' +")
@@ -169,8 +169,8 @@ rep("      '<div class=\"rk num\">' + (S.n - 1) + '곳 중 ' + g.rank + '번째�
     "      '<div class=\"rk num\">' + (S.n - 1) + '곳 중 ' + g.rank + '번째로 가까움' + (g.km != null ? ' · ' + Number(g.km).toLocaleString('ko-KR') + ' km' : '') + '</div>' +")
 rep("'</b><span class=\"s\">' + esc(u.sub) + '</span></td>' +", "'</b><span class=\"s\">' + esc(KIND[u.kind]) + '</span></td>' +")
 rep("  var t = '행선지 제' + S.no + '호 — '", "  var t = '행선지3 제' + S.no + '호 — '")
-rep("'지도에 마우스를 올려 보고, 눌러서 부르세요. 이름을 적어도 됩니다.'", "'천체에 올려 도감을 보고, 묶음을 펼쳐 눌러서 부르세요. 이지 모드는 거리(km)도 알려 줍니다.'")
-rep("'지도를 누르면 이름이 보이고, 한 번 더 누르면 부릅니다.'", "'묶음을 펼친 뒤 천체를 한 번 눌러 고르고, 한 번 더 누르면 부릅니다. 거리(km)도 알려 줍니다.'")
+rep("'지도에 마우스를 올려 보고, 눌러서 부르세요. 이름을 적어도 됩니다.'", "'천체에 올려 도감을 보고, 묶음을 펼쳐 눌러서 부르세요.'")
+rep("'지도를 누르면 이름이 보이고, 한 번 더 누르면 부릅니다.'", "'묶음을 펼친 뒤 천체를 한 번 눌러 고르고, 한 번 더 누르면 부릅니다.'")
 s = s.replace("msg('어디든 하나 불러서 시작하세요.');", "msg('천체를 눌러 묶음을 펼치고, 거기서 불러 보세요.');")
 s = s.replace("'어디든 하나 불러서 시작하세요.'", "'천체를 눌러 묶음을 펼치고, 거기서 불러 보세요.'")
 s = s.replace("msg(S.list.length ? '' : '어디든 하나 불러서 시작하세요.');", "msg(S.list.length ? '' : '천체를 눌러 묶음을 펼치고, 거기서 불러 보세요.');")
