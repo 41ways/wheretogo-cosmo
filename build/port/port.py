@@ -55,6 +55,12 @@ rep('.map{position:relative;background:var(--sea);border:1px solid var(--line)}\
 .mbtns button{font:inherit;font-size:11.5px;font-weight:700;background:var(--panel);color:var(--ink);border:1.5px solid var(--ink);padding:5px 9px;cursor:pointer;letter-spacing:.04em}
 .mbtns button:hover{border-color:var(--accent);color:var(--accent)}
 .mbtns .back2{border-color:var(--accent);color:var(--accent)}
+.vtog{display:flex;border:1.5px solid var(--ink)}
+.mbtns .vtog button{border:0;padding:5px 10px;font-family:var(--mono);font-weight:600;color:var(--faint);background:var(--panel)}
+.mbtns .vtog button.on{background:var(--ink);color:var(--bg)}
+.mbtns .vtog button:hover{color:var(--accent);border:0}
+.mbtns .vtog button.on:hover{color:var(--bg)}
+#labels .halo{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:2px solid;opacity:.9}
 .maphint{position:absolute;left:12px;bottom:9px;font-size:10.5px;color:var(--faint);letter-spacing:.05em;pointer-events:none;z-index:3}
 /* 도감 */
 .dex{display:grid;grid-template-columns:104px 1fr;gap:12px;align-items:start;padding:12px;margin-bottom:12px;background:var(--sea);border:1px solid var(--line);min-height:128px}
@@ -91,16 +97,15 @@ rep('<p class="sub">가까운 순서만 보고 오늘의 시·군을 맞히세�
 block('        <svg id="map" role="img" aria-label="전국 시·군 지도"></svg>', '      <div class="legend">', '''        <div id="labels"></div>
         <div class="crumb" id="crumb">태양계</div>
         <div class="mbtns">
-          <button id="bBack" class="back2" hidden>← 태양계로</button>
-          <button id="bTop">위에서</button>
-          <button id="bTilt">비스듬히</button>
+          <div class="vtog" id="vtog" role="group" aria-label="시점"><button data-v="3d" class="on">3D</button><button data-v="2d">2D</button></div>
+          <button id="bBack" class="back2" hidden>← 뒤로가기</button>
         </div>
         <div class="maphint" id="maphint">천체를 누르면 그 묶음이 펼쳐집니다</div>
         <div class="tip" id="tip" hidden></div>
       </div>
 ''')
 rep('<div class="credit">경계 vuski/admdongkor (2026.7.1 행정동) · 청사 위치 © OpenStreetMap 기여자</div>',
-    '<div class="credit">위치 NASA JPL Horizons (한국 시간 정오) · 사진 출처는 도감 카드에 · 거리는 로그 눈금, 크기는 종류별</div>')
+    '<div class="credit">위치 NASA JPL Horizons (한국 시간 정오) · 행성 텍스처 Solar System Scope (CC BY 4.0) · 사진 출처는 도감 카드에 · 거리는 로그 눈금</div>')
 rep('''      <div id="askform">
         <form class="field" id="askf" autocomplete="off">''', '''      <div class="dex" id="dex"></div>
       <div id="askform">

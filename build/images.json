@@ -1,0 +1,891 @@
+{
+ "sun": {
+  "file": "img/sun.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:The_Sun_in_white_light.jpg",
+  "license": "CC BY-SA 4.0",
+  "artist": "Matúš Motlo",
+  "kind_of_image": "photo"
+ },
+ "mercury": {
+  "file": "img/mercury.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Mercury_in_true_color.jpg",
+  "license": "Public domain",
+  "artist": "NASA/Johns Hopkins University Applied Physics Laboratory/Arizona State University/Carnegie Institution of Washington",
+  "kind_of_image": "photo"
+ },
+ "venus": {
+  "file": "img/venus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Venus_from_Mariner_10.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL-Caltech",
+  "kind_of_image": "photo"
+ },
+ "earth": {
+  "file": "img/earth.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:The_Earth_seen_from_Apollo_17.jpg",
+  "license": "Public domain",
+  "artist": "NASA/Apollo 17 crew; taken by either Harrison Schmitt or Ron Evans",
+  "kind_of_image": "photo"
+ },
+ "mars": {
+  "file": "img/mars.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png",
+  "license": "CC BY 2.0",
+  "artist": "Kevin Gill from Los Angeles, CA, United States",
+  "kind_of_image": "photo"
+ },
+ "jupiter": {
+  "file": "img/jupiter.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Jupiter_OPAL_2024.png",
+  "license": "Public domain",
+  "artist": "NASA/STSCI (S.T.A.R.S)",
+  "kind_of_image": "photo"
+ },
+ "saturn": {
+  "file": "img/saturn.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Saturn_global_view_from_Cassini,_rings_open_Better_Colour.png",
+  "license": "Public domain",
+  "artist": "NASA / JPL-Caltech / SSI / color composite by Gordan Ugarkovic",
+  "kind_of_image": "photo"
+ },
+ "uranus": {
+  "file": "img/uranus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Uranus_Voyager2_color_calibrated.png",
+  "license": "CC0",
+  "artist": "Ardenau4",
+  "kind_of_image": "photo"
+ },
+ "neptune": {
+  "file": "img/neptune.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Neptune_Voyager2_color_calibrated.png",
+  "license": "CC0",
+  "artist": "NASA / Voyager 2 / PDS / OPUS / Ardenau4",
+  "kind_of_image": "photo"
+ },
+ "ceres": {
+  "file": "img/ceres.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Ceres_-_RC3_-_Haulani_Crater_(22381131691)_(cropped).jpg",
+  "license": "Public domain",
+  "artist": "Justin Cowart",
+  "kind_of_image": "photo"
+ },
+ "pluto": {
+  "file": "img/pluto.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Pluto_in_True_Color_-_High-Res.png",
+  "license": "Public domain",
+  "artist": "NASA/Johns Hopkins University Applied Physics Laboratory/Southwest Research Institute/Alex Parker",
+  "kind_of_image": "photo"
+ },
+ "haumea": {
+  "file": "img/haumea.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Haumea_Hubble.png",
+  "license": "Public domain",
+  "artist": "Renerpho",
+  "kind_of_image": "discovery"
+ },
+ "makemake": {
+  "file": "img/makemake.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Makemake_and_its_moon.jpg",
+  "license": "CC BY 4.0",
+  "artist": "NASA, ESA, and A. Parker and M. Buie (Southwest Research Institute)",
+  "kind_of_image": "discovery"
+ },
+ "eris": {
+  "file": "img/eris.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Eris_and_moon_Dysnomia_JWST_NIRCam.jpg",
+  "license": "CC BY-SA 4.0",
+  "artist": "NASA/ESA/CSA JWST NIRCam; Ana Carolina de Souza Feliciano et al. & Melina Thévenot",
+  "kind_of_image": "discovery"
+ },
+ "sedna": {
+  "file": "img/sedna.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Sedna_PRC2004-14d.jpg",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "discovery"
+ },
+ "quaoar": {
+  "file": "img/quaoar.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Quaoar_as_taken_by_NIRCam.png",
+  "license": "CC0",
+  "artist": "JosephTheDalmatian",
+  "kind_of_image": "discovery"
+ },
+ "gonggong": {
+  "file": "img/gonggong.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Xiangliu_orbiting_225088_Gonggong_(2010,_cropped).jpg",
+  "license": "Public domain",
+  "artist": "NASA, ESA, C. Kiss (Konkoly Observatory), and J. Stansberry (STScI)",
+  "kind_of_image": "discovery"
+ },
+ "orcus": {
+  "file": "img/orcus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Orcus-Vanth_discovery_brightened.png",
+  "license": "Public domain",
+  "artist": "Hubble Space Telescope/Michael E. Brown (processing by Nrco0e at English Wikipedia)",
+  "kind_of_image": "discovery"
+ },
+ "moon": {
+  "file": "img/moon.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:FullMoon2010.jpg",
+  "license": "CC BY-SA 3.0",
+  "artist": "Gregory H. Revera",
+  "kind_of_image": "photo"
+ },
+ "phobos": {
+  "file": "img/phobos.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Phobos_colour_2008.jpg",
+  "license": "Public domain",
+  "artist": "NASA / JPL-Caltech / University of Arizona",
+  "kind_of_image": "photo"
+ },
+ "deimos": {
+  "file": "img/deimos.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:NASA-Deimos-MarsMoon-20090221.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL/University of Arizona",
+  "kind_of_image": "photo"
+ },
+ "io": {
+  "file": "img/io.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Io_highest_resolution_natural_color.png",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "photo"
+ },
+ "europa": {
+  "file": "img/europa.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Europa_-_Perijove_45_(cropped).png",
+  "license": "CC BY 2.0",
+  "artist": "NASA/JPL-Caltech/SwRI/MSSS/Kevin M. Gill",
+  "kind_of_image": "photo"
+ },
+ "ganymede": {
+  "file": "img/ganymede.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Ganymede_-_Perijove_34_Composite.png",
+  "license": "CC BY 2.0",
+  "artist": "NASA/JPL-Caltech/SwRI/MSSS/Kevin M. Gill",
+  "kind_of_image": "photo"
+ },
+ "callisto": {
+  "file": "img/callisto.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Callisto_VGR2_C2060635_OGB.png",
+  "license": "CC BY-SA 2.0",
+  "artist": "zelario12",
+  "kind_of_image": "photo"
+ },
+ "amalthea": {
+  "file": "img/amalthea.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Amalthea_PIA02532.png",
+  "license": "Public domain",
+  "artist": "NASA / JPL",
+  "kind_of_image": "photo"
+ },
+ "himalia": {
+  "file": "img/himalia.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Himalia.png",
+  "license": "Public domain",
+  "artist": "NASA/JPL/University of Arizona",
+  "kind_of_image": "photo"
+ },
+ "elara": {
+  "file": "img/elara.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Elara_-_New_Horizons.png",
+  "license": "CC BY-SA 4.0",
+  "artist": "Nrco0e",
+  "kind_of_image": "photo"
+ },
+ "pasiphae": {
+  "file": "img/pasiphae.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Pasipha%C3%A9.jpg",
+  "license": "CC BY 3.0",
+  "artist": "OHP (Observatoire de Haute-Provence) / CNRS (Centre national de la recherche scientifique) / IMCCE (Institut de mécanique céleste et de calcul des éphémérides)",
+  "kind_of_image": "discovery"
+ },
+ "thebe": {
+  "file": "img/thebe.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Thebe.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL",
+  "kind_of_image": "photo"
+ },
+ "mimas": {
+  "file": "img/mimas.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Mimas_Masked.jpg",
+  "license": "Public domain",
+  "artist": "NASA / JPL / Space Science Institute",
+  "kind_of_image": "photo"
+ },
+ "enceladus": {
+  "file": "img/enceladus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA17202_-_Approaching_Enceladus.jpg",
+  "license": "Public domain",
+  "artist": "National Aeronautics and Space Administration (NASA) / Jet Propulsion Laboratory (JPL)",
+  "kind_of_image": "photo"
+ },
+ "tethys": {
+  "file": "img/tethys.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Global_view_of_Tethys_from_Cassini.jpg",
+  "license": "Public domain",
+  "artist": "NASA / JPL-Caltech / SSI / Gordan Ugarkovic",
+  "kind_of_image": "photo"
+ },
+ "dione": {
+  "file": "img/dione.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Dione_in_natural_light.jpg",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "photo"
+ },
+ "rhea": {
+  "file": "img/rhea.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA07763_Rhea_full_globe5.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL/Space Science Institute",
+  "kind_of_image": "photo"
+ },
+ "titan": {
+  "file": "img/titan.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Titan_in_true_color_by_Kevin_M._Gill.jpg",
+  "license": "CC BY 2.0",
+  "artist": "NASA/JPL-Caltech/SSI/Kevin M. Gill",
+  "kind_of_image": "photo"
+ },
+ "hyperion": {
+  "file": "img/hyperion.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Hyperion_true.jpg",
+  "license": "Public domain",
+  "artist": "NASA / JPL / SSI / Gordan Ugarkovic",
+  "kind_of_image": "photo"
+ },
+ "iapetus": {
+  "file": "img/iapetus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Iapetus_trailing_natural_color.jpg",
+  "license": "CC BY-SA 2.5",
+  "artist": "NASA / JPL / SSI / Gordan Ugarkovic",
+  "kind_of_image": "photo"
+ },
+ "phoebe": {
+  "file": "img/phoebe.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Phoebe_cassini_full.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL/Space Science Institute",
+  "kind_of_image": "photo"
+ },
+ "janus": {
+  "file": "img/janus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA12714_Janus_crop.jpg",
+  "license": "Public domain",
+  "artist": "NASA / Jet Propulsion Laboratory / Space Science Institute",
+  "kind_of_image": "photo"
+ },
+ "epimetheus": {
+  "file": "img/epimetheus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA09813_Epimetheus_S._polar_region.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL/Space Science Institute",
+  "kind_of_image": "photo"
+ },
+ "prometheus": {
+  "file": "img/prometheus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Prometheus_12-26-09b.jpg",
+  "license": "Public domain",
+  "artist": "NASA / JPL / Space Science Institute",
+  "kind_of_image": "photo"
+ },
+ "pandora": {
+  "file": "img/pandora.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA21055_-_Pandora_Up_Close.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL-Caltech/Space Science Institute",
+  "kind_of_image": "photo"
+ },
+ "ariel": {
+  "file": "img/ariel.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Ariel_in_monochrome.jpg",
+  "license": "CC BY 2.0",
+  "artist": "Kevin M. Gill",
+  "kind_of_image": "photo"
+ },
+ "umbriel": {
+  "file": "img/umbriel.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA00040_Umbrielx2.47.jpg",
+  "license": "Public domain",
+  "artist": "NASA / Jet Propulsion Lab",
+  "kind_of_image": "photo"
+ },
+ "titania": {
+  "file": "img/titania.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Titania_VGR2_C2684315.png",
+  "license": "CC BY-SA 2.0",
+  "artist": "zelario12",
+  "kind_of_image": "photo"
+ },
+ "oberon": {
+  "file": "img/oberon.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Oberon_in_true_color_by_Kevin_M._Gill.jpg",
+  "license": "CC BY 2.0",
+  "artist": "Kevin M. Gill",
+  "kind_of_image": "photo"
+ },
+ "miranda": {
+  "file": "img/miranda.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Miranda_mosaic_in_color_-_Voyager_2.png",
+  "license": "CC BY-SA 2.0",
+  "artist": "zelario12",
+  "kind_of_image": "photo"
+ },
+ "puck": {
+  "file": "img/puck.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Puck,_moon_of_Uranus_(1986).png",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "photo"
+ },
+ "portia": {
+  "file": "img/portia.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Portia,_moon_of_Uranus,_1986.jpg",
+  "license": "Public domain",
+  "artist": "Voyager 2 and whoever made and/or updates PDS Image Atlas and/or OPUS.",
+  "kind_of_image": "photo"
+ },
+ "juliet": {
+  "file": "img/juliet.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Julietmoon.png",
+  "license": "Public domain",
+  "artist": "Voyager 2 Spacecraft (NASA)",
+  "kind_of_image": "photo"
+ },
+ "belinda": {
+  "file": "img/belinda.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Belinda.gif",
+  "license": "Public domain",
+  "artist": "최준최우",
+  "kind_of_image": "photo"
+ },
+ "cressida": {
+  "file": "img/cressida.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Cressida_01-24-1986_V2.png",
+  "license": "Public domain",
+  "artist": "NASA and Caltech's JPL",
+  "kind_of_image": "photo"
+ },
+ "rosalind": {
+  "file": "img/rosalind.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Rosalindmoon.png",
+  "license": "Public domain",
+  "artist": "Hubble Space Telescope",
+  "kind_of_image": "discovery"
+ },
+ "desdemona": {
+  "file": "img/desdemona.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Desdemonamoon.png",
+  "license": "Public domain",
+  "artist": "NASA Voyager 2 Spacecraft",
+  "kind_of_image": "photo"
+ },
+ "sycorax": {
+  "file": "img/sycorax.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Sycorax_CFHT_2001-08-24_crop.gif",
+  "license": "CC BY 4.0",
+  "artist": "Processing by User:Nrco0e; original images by JJ Kavelaars (CFHT/CADC)",
+  "kind_of_image": "discovery"
+ },
+ "caliban": {
+  "file": "img/caliban.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Caliban_discovery_Palomar.gif",
+  "license": "Public domain",
+  "artist": "Palomar Observatory/NASA",
+  "kind_of_image": "discovery"
+ },
+ "bianca": {
+  "file": "img/bianca.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Biancamoon.png",
+  "license": "Public domain",
+  "artist": "Voyager 2 Spacecraft",
+  "kind_of_image": "photo"
+ },
+ "triton": {
+  "file": "img/triton.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Triton_moon_mosaic_Voyager_2_(large).jpg",
+  "license": "Public domain",
+  "artist": "NASA / Jet Propulsion Lab / U.S. Geological Survey",
+  "kind_of_image": "photo"
+ },
+ "nereid": {
+  "file": "img/nereid.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Nereid-Voyager2.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL",
+  "kind_of_image": "photo"
+ },
+ "proteus": {
+  "file": "img/proteus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Proteus_(Voyager_2).jpg",
+  "license": "Public domain",
+  "artist": "Voyager 2, NASA",
+  "kind_of_image": "photo"
+ },
+ "larissa": {
+  "file": "img/larissa.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Larissa_1.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL/Space Science Institute",
+  "kind_of_image": "photo"
+ },
+ "galatea": {
+  "file": "img/galatea.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Galatea_moon.jpg",
+  "license": "Public domain",
+  "artist": "Voyager 2",
+  "kind_of_image": "photo"
+ },
+ "despina": {
+  "file": "img/despina.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Despina.jpg",
+  "license": "Public domain",
+  "artist": "NASA/Calvin J. Hamilton",
+  "kind_of_image": "photo"
+ },
+ "thalassa": {
+  "file": "img/thalassa.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Neptune_Trio.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL",
+  "kind_of_image": "photo"
+ },
+ "naiad": {
+  "file": "img/naiad.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Naiad_Voyager.png",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "photo"
+ },
+ "halimede": {
+  "file": "img/halimede.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Halimede_VLT-FORS1_2002-09-03_alt_annotated.gif",
+  "license": "CC BY 4.0",
+  "artist": "Brett J. Gladman et al./European Southern Observatory (processed by Nrco0e)",
+  "kind_of_image": "discovery"
+ },
+ "charon": {
+  "file": "img/charon.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Charon_in_True_Color_-_High-Res.png",
+  "license": "Public domain",
+  "artist": "NASA/Johns Hopkins University Applied Physics Laboratory/Southwest Research Institute/Alex Parker",
+  "kind_of_image": "photo"
+ },
+ "nix": {
+  "file": "img/nix.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Nix_best_view.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JHU-APL/SwRI/Roman Tkachenko",
+  "kind_of_image": "photo"
+ },
+ "hydra": {
+  "file": "img/hydra.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Hydra_reprocessed.png",
+  "license": "Public domain",
+  "artist": "NASA/JHU-APL/SwRI/Roman Tkachenko",
+  "kind_of_image": "photo"
+ },
+ "vesta": {
+  "file": "img/vesta.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Vesta_in_natural_color.jpg",
+  "license": "Public domain",
+  "artist": "NASA / JPL / MPS / DLR / IDA / Björn Jónsson",
+  "kind_of_image": "photo"
+ },
+ "pallas": {
+  "file": "img/pallas.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Potw1749a_Pallas_crop.png",
+  "license": "CC BY 4.0",
+  "artist": "Credit: ESO/Vernazza et al.",
+  "kind_of_image": "photo"
+ },
+ "juno_a": {
+  "file": "img/juno_a.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:3_Juno_VLT_(2021).png",
+  "license": "CC BY-SA 4.0",
+  "artist": "VSO Very Large Telescope SPHERE/ZIMPOL team",
+  "kind_of_image": "photo"
+ },
+ "hygiea": {
+  "file": "img/hygiea.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:SPHERE_image_of_Hygiea.jpg",
+  "license": "CC BY 4.0",
+  "artist": "ESO/P. Vernazza et al./MISTRAL algorithm (ONERA/CNRS)",
+  "kind_of_image": "photo"
+ },
+ "eros": {
+  "file": "img/eros.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Eros_-_PIA02923_(color).jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL/JHUAPL (color version published at Planetary Society)",
+  "kind_of_image": "photo"
+ },
+ "itokawa": {
+  "file": "img/itokawa.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Asteroid_(25143)_Itokawa_seen_in_close-up_(eso1405c).jpg",
+  "license": "CC BY 4.0",
+  "artist": "JAXA",
+  "kind_of_image": "photo"
+ },
+ "ryugu": {
+  "file": "img/ryugu.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:162173_Ryugu_brightened.png",
+  "license": "CC BY 4.0",
+  "artist": "Original image taken by JAXA/ISAS, processed by User:Anonymsiy, image adjusted by User:Nrco0e",
+  "kind_of_image": "photo"
+ },
+ "bennu": {
+  "file": "img/bennu.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Bennu_mosaic_OSIRIS-REx_(square).png",
+  "license": "Public domain",
+  "artist": "NASA/Goddard/University of Arizona",
+  "kind_of_image": "photo"
+ },
+ "apophis": {
+  "file": "img/apophis.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:99942_Apophis_shape.png",
+  "license": "CC BY 4.0",
+  "artist": "Astronomical Institute of the Charles University: Josef Ďurech, Vojtěch Sidorin",
+  "kind_of_image": "illustration"
+ },
+ "psyche": {
+  "file": "img/psyche.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Psyche_VLT.png",
+  "license": "CC BY 4.0",
+  "artist": "ESO/Vernazza et al./MISTRAL algorithm (ONERA/CNRS)",
+  "kind_of_image": "photo"
+ },
+ "didymos": {
+  "file": "img/didymos.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Dimorphos_and_Didymos_as_seen_by_DARTMission.png",
+  "license": "Public domain",
+  "artist": "NASA/JH-APL/Roman Tkachenko",
+  "kind_of_image": "photo"
+ },
+ "lutetia": {
+  "file": "img/lutetia.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Rosetta_triumphs_at_asteroid_Lutetia.jpg",
+  "license": "CC BY-SA 2.0",
+  "artist": "ESA 2010 MPS for OSIRIS Team MPS/UPD/LAM/IAA/RSSD/INTA/UPM/DASP/IDA",
+  "kind_of_image": "photo"
+ },
+ "ida": {
+  "file": "img/ida.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:243_ida_crop.jpg",
+  "license": "Public domain",
+  "artist": "243_ida.jpg: NASA/JPL derivative work: Chzz ►",
+  "kind_of_image": "photo"
+ },
+ "gaspra": {
+  "file": "img/gaspra.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:951_Gaspra.jpg",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "photo"
+ },
+ "mathilde": {
+  "file": "img/mathilde.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:253_Mathilde_NASA_crop.png",
+  "license": "Public domain",
+  "artist": "NASA/JPL",
+  "kind_of_image": "photo"
+ },
+ "eugenia": {
+  "file": "img/eugenia.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:45_Eugenia_VLT_(2021),_deconvolved.pdf",
+  "license": "CC BY-SA 4.0",
+  "artist": "VSO Very Large Telescope SPHERE/ZIMPOL team",
+  "kind_of_image": "photo"
+ },
+ "davida": {
+  "file": "img/davida.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:511_Davida_VLT_(2021),_deconvolved.pdf",
+  "license": "CC BY-SA 4.0",
+  "artist": "VSO Very Large Telescope SPHERE/ZIMPOL team",
+  "kind_of_image": "photo"
+ },
+ "interamnia": {
+  "file": "img/interamnia.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:704_Interamnia_VLT_(2021),_deconvolved.pdf",
+  "license": "CC BY-SA 4.0",
+  "artist": "VSO Very Large Telescope SPHERE/ZIMPOL team",
+  "kind_of_image": "photo"
+ },
+ "patroclus": {
+  "file": "img/patroclus.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:617_Patroclus_Hubble.jpg",
+  "license": "Public domain",
+  "artist": "Hubble Space Telescope/SwRI",
+  "kind_of_image": "discovery"
+ },
+ "eurybates": {
+  "file": "img/eurybates.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Eurybates-satellite.gif",
+  "license": "Public domain",
+  "artist": "NASA/SwRI/Keith S. Noll",
+  "kind_of_image": "discovery"
+ },
+ "dinkinesh": {
+  "file": "img/dinkinesh.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Dinkinesh_First_Look_L%27LORRI.png",
+  "license": "Public domain",
+  "artist": "NASA/Goddard/SwRI/Johns Hopkins APL/NOIRLab",
+  "kind_of_image": "photo"
+ },
+ "steins": {
+  "file": "img/steins.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:2867_Steins.jpg",
+  "license": "CC BY-SA 3.0 igo",
+  "artist": "ESA/OSIRIS Team MPS/UPD/LAM/IAA/RSSD/INTA/UPM/DASP/IDA",
+  "kind_of_image": "photo"
+ },
+ "toutatis": {
+  "file": "img/toutatis.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:4179_Toutatis_HQ.png",
+  "license": "CC BY 4.0",
+  "artist": "Yun Jiang, Jianghui Ji, Jiangchuan Huang, Simone Marchi, Yuan Li & Wing-Huen Ip",
+  "kind_of_image": "photo"
+ },
+ "phaethon": {
+  "file": "img/phaethon.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA22185.gif",
+  "license": "Public domain",
+  "artist": "Arecibo Observatory/NASA/NSF",
+  "kind_of_image": "photo"
+ },
+ "kleopatra": {
+  "file": "img/kleopatra.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:216_Kleopatra_VLT_(2021),_deconvolved.pdf",
+  "license": "CC BY-SA 4.0",
+  "artist": "VSO Very Large Telescope SPHERE/ZIMPOL team",
+  "kind_of_image": "photo"
+ },
+ "halley": {
+  "file": "img/halley.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Lspn_comet_halley.jpg",
+  "license": "Public domain",
+  "artist": "NASA/W. Liller",
+  "kind_of_image": "photo"
+ },
+ "encke": {
+  "file": "img/encke.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Comet_Encke.jpg",
+  "license": "Public domain",
+  "artist": "Jim Scotti",
+  "kind_of_image": "photo"
+ },
+ "tempel1": {
+  "file": "img/tempel1.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA02142_Tempel_1_bottom_sharped.jpg",
+  "license": "Public domain",
+  "artist": "NASA / Jet Propulsion Laboratory / University of Maryland",
+  "kind_of_image": "photo"
+ },
+ "wild2": {
+  "file": "img/wild2.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Wild2_3.jpg",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "photo"
+ },
+ "cg67p": {
+  "file": "img/cg67p.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Comet_67P_True_color.jpg",
+  "license": "CC BY-SA 4.0",
+  "artist": "ESA/Rosetta/MPS for OSIRIS Team MPS/UPD/LAM/IAA/SSO/INTA/UPM/DASP/IDA",
+  "kind_of_image": "photo"
+ },
+ "hartley2": {
+  "file": "img/hartley2.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Introducing_Comet_Hartley_2.png",
+  "license": "Public domain",
+  "artist": "NASA/JPL-Caltech/UMD",
+  "kind_of_image": "photo"
+ },
+ "swifttuttle": {
+  "file": "img/swifttuttle.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:A466_1992-11-25_109PSwift-Tuttle.jpg",
+  "license": "CC0",
+  "artist": "Landessternwarte Heidelberg-Königstuhl",
+  "kind_of_image": "photo"
+ },
+ "halebopp": {
+  "file": "img/halebopp.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Comet_Hale-Bopp_1995O1.jpg",
+  "license": "CC BY-SA 3.0",
+  "artist": "E. Kolmhofer, H. Raab; Johannes-Kepler-Observatory, Linz, Austria (https://sternwarte.at)",
+  "kind_of_image": "photo"
+ },
+ "neowise": {
+  "file": "img/neowise.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Comet_2020_F3_(NEOWISE)_on_Jul_14_2020_aligned_to_stars.jpg",
+  "license": "CC BY-SA 4.0",
+  "artist": "SimgDe",
+  "kind_of_image": "photo"
+ },
+ "tsuchinshan": {
+  "file": "img/tsuchinshan.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Comet_Tsuchinshan%E2%80%93ATLAS_over_Ohio_(Composite).jpg",
+  "license": "CC BY 2.0",
+  "artist": "Jim Vajda",
+  "kind_of_image": "photo"
+ },
+ "voyager1": {
+  "file": "img/voyager1.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Voyager_spacecraft_model.png",
+  "license": "Public domain",
+  "artist": "National Aeronautics and Space Administration (NASA)",
+  "kind_of_image": "illustration"
+ },
+ "voyager2": {
+  "file": "img/voyager2.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Voyager_spacecraft.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL",
+  "kind_of_image": "illustration"
+ },
+ "newhorizons": {
+  "file": "img/newhorizons.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:New_Horizons_spacecraft_model_1.png",
+  "license": "Public domain",
+  "artist": "National Aeronautics and Space Administration (NASA), Applied Physics Laboratory",
+  "kind_of_image": "illustration"
+ },
+ "pioneer10": {
+  "file": "img/pioneer10.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:An_artist%27s_impression_of_a_Pioneer_spacecraft_on_its_way_to_interstellar_space.jpg",
+  "license": "Public domain",
+  "artist": "NASA/Don Davis",
+  "kind_of_image": "illustration"
+ },
+ "pioneer11": {
+  "file": "img/pioneer11.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Pioneer_10-11_spacecraft.jpg",
+  "license": "Public domain",
+  "artist": "Don Davis for NASA",
+  "kind_of_image": "illustration"
+ },
+ "jwst": {
+  "file": "img/jwst.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:JWST_spacecraft_model_3.png",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "illustration"
+ },
+ "parker": {
+  "file": "img/parker.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Parker_Solar_Probe_spacecraft_model.png",
+  "license": "Public domain",
+  "artist": "National Aeronautics and Space Administration (NASA)",
+  "kind_of_image": "illustration"
+ },
+ "junoprobe": {
+  "file": "img/junoprobe.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Juno_spacecraft_model_1.png",
+  "license": "Public domain",
+  "artist": "National Aeronautics and Space Administration (NASA)",
+  "kind_of_image": "illustration"
+ },
+ "iss": {
+  "file": "img/iss.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:The_station_pictured_from_the_SpaceX_Crew_Dragon_5.jpg",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "photo"
+ },
+ "tiangong": {
+  "file": "img/tiangong.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Chinese_Tiangong_Space_Station.jpg",
+  "license": "CC BY-SA 4.0",
+  "artist": "Shujianyang",
+  "kind_of_image": "illustration"
+ },
+ "hubble": {
+  "file": "img/hubble.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Hubble_2009_close-up_2.jpg",
+  "license": "Public domain",
+  "artist": "NASA",
+  "kind_of_image": "photo"
+ },
+ "danuri": {
+  "file": "img/danuri.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Kplo_rendered_image.png",
+  "license": "KOGL Type 1",
+  "artist": "Ministry of Science and ICT 과학기술정보통신부",
+  "kind_of_image": "illustration"
+ },
+ "euclid": {
+  "file": "img/euclid.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Euclid_looking_into_the_Universe_ESA24697255.jpeg",
+  "license": "CC BY-SA 3.0 igo",
+  "artist": "European Space Agency",
+  "kind_of_image": "illustration"
+ },
+ "soho": {
+  "file": "img/soho.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:SOHO_ESA350759.jpg",
+  "license": "CC BY-SA 3.0 igo",
+  "artist": "European Space Agency",
+  "kind_of_image": "illustration"
+ },
+ "clipper": {
+  "file": "img/clipper.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Europa_Clipper_spacecraft_model.png",
+  "license": "Public domain",
+  "artist": "National Aeronautics and Space Administration (NASA) · Jet Propulsion Laboratory",
+  "kind_of_image": "illustration"
+ },
+ "juice": {
+  "file": "img/juice.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Juice_launch_kit_cover_close-up.png",
+  "license": "CC BY-SA 3.0 igo",
+  "artist": "ESA",
+  "kind_of_image": "illustration"
+ },
+ "lucy": {
+  "file": "img/lucy.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Lucy-PatroclusMenoetius-art.png",
+  "license": "Public domain",
+  "artist": "NASA’s Goddard Space Flight Center/Conceptual Image Lab/Adriana Gutierrez",
+  "kind_of_image": "illustration"
+ },
+ "psycheprobe": {
+  "file": "img/psycheprobe.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:PIA21499_-_Artist%27s_Concept_of_Psyche_Spacecraft_with_Five-Panel_Array.jpg",
+  "license": "Public domain",
+  "artist": "NASA/JPL-Caltech/Arizona State Univ./Space Systems Loral/Peter Rubin",
+  "kind_of_image": "illustration"
+ },
+ "hera": {
+  "file": "img/hera.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Hera_in_orbit.jpg",
+  "license": "CC BY-SA 3.0 igo",
+  "artist": "ESA – Science Office",
+  "kind_of_image": "illustration"
+ },
+ "bepi": {
+  "file": "img/bepi.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:BepiColombo_stack_cropped.jpg",
+  "license": "CC BY-SA 3.0 igo",
+  "artist": "ESA–C. Carreau",
+  "kind_of_image": "photo"
+ },
+ "solo": {
+  "file": "img/solo.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Solar_Orbiter_ESA20813950.jpg",
+  "license": "CC BY-SA 3.0 igo",
+  "artist": "European Space Agency",
+  "kind_of_image": "illustration"
+ },
+ "roadster": {
+  "file": "img/roadster.jpg",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Elon_Musk%27s_Tesla_Roadster_(40143096241).jpg",
+  "license": "CC0",
+  "artist": "SpaceX",
+  "kind_of_image": "photo"
+ }
+}

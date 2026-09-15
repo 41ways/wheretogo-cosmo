@@ -9,6 +9,12 @@ var SKYP = null, SKYG = null, GROUP_META = {};
 var T = null;                                   // three 상태
 var VIEW = { gid:null }, HOV = null, SEL = null, touch = false, armed = null, flying = null;
 var SIZE = { star:2.3, planet:1.1, dwarf:.66, asteroid:.36, comet:.4, craft:.44, moon:.5 };
+/* 태양·행성·달은 실제 표면 텍스처(Solar System Scope, CC BY 4.0)를 입히고 태양 쪽에서 빛을 받는다.
+   크기는 실제 비율을 누그러뜨렸다 — 목성이 화성보다 커 보이되 작은 천체도 보이게 */
+var TEX = { sun:'sun', mercury:'mercury', venus:'venus_atmosphere', earth:'earth_daymap', mars:'mars', jupiter:'jupiter', saturn:'saturn', uranus:'uranus', neptune:'neptune', moon:'moon' };
+var SIZE_ID = { sun:2.7, mercury:.72, venus:.96, earth:1.0, mars:.82, jupiter:1.7, saturn:1.5, uranus:1.22, neptune:1.2, moon:.55 };
+function sizeOf(u){ return SIZE_ID[u.id] || SIZE[u.kind]; }
+function textured(i){ return !!TEX[U[i].id]; }
 
 function logR(r){ return r < AU_MIN ? R0 * r / AU_MIN : R0 + (R1 - R0) * (Math.log10(r) - Math.log10(AU_MIN)) / (Math.log10(AU_MAX) - Math.log10(AU_MIN)); }
 function mainPos(i){ var p = SKYP[i], x = p[0] / AU, y = p[1] / AU, z = p[2] / AU, r = Math.hypot(x, y, z) || 1e-9, k = logR(r) / r; return new THREE.Vector3(x * k, z * k, -y * k); }
@@ -64,13 +70,43 @@ function buildMap(){
   [T.mainRings, T.localRings].forEach(function(g){ g.children.forEach(function(o){ o.userData.base = o.material.opacity; }); });
   T.ringMix = 0; T.ringMixDst = 0;                  // 0 = 태양계 궤도선, 1 = 행성계 궤도선
 
-  var geo = {}, glow = new THREE.Mesh(new THREE.SphereGeometry(3.8, 24, 16), new THREE.MeshBasicMaterial({ color:GOLD, transparent:true, opacity:.12, depthWrite:false }));   // 빛무리가 태양을 가리지 않게
+  /* 빛 — 태양 자리의 점광원과 약한 주변광. 행성계 화면에서는 태양이 있는 방향 먼 곳에 둔다 */
+  T.light = new THREE.PointLight(0xffffff, 1.7, 0, 0); scene.add(T.light);
+  T.lightDst = new THREE.Vector3();
+  scene.add(new THREE.AmbientLight(0x8090b0, .5));
+  var loader = new THREE.TextureLoader();
+  function glowTexture(){                            // 태양 빛무리 — 가운데가 밝은 둥근 그러데이션
+    var c = document.createElement('canvas'); c.width = c.height = 128;
+    var g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, 'rgba(255,220,140,.9)'); gr.addColorStop(.25, 'rgba(255,190,90,.45)'); gr.addColorStop(1, 'rgba(255,160,60,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  }
+  var geo = {};
   U.forEach(function(u, i){
-    var s = SIZE[u.kind], key = u.kind === 'craft' ? 'o' + s : 's' + s;
-    if (!geo[key]) geo[key] = u.kind === 'craft' ? new THREE.OctahedronGeometry(s) : new THREE.SphereGeometry(s, 22, 16);
-    var m = new THREE.Mesh(geo[key], new THREE.MeshBasicMaterial({ color:baseColor(u), transparent:true, opacity:1 }));
+    var s = sizeOf(u), m;
+    if (TEX[u.id]) {
+      var tex = loader.load('tex/' + TEX[u.id] + '.jpg');
+      var mat = u.kind === 'star' ? new THREE.MeshBasicMaterial({ map:tex, transparent:true, opacity:1 })
+                                  : new THREE.MeshStandardMaterial({ map:tex, roughness:1, metalness:0, transparent:true, opacity:1 });
+      m = new THREE.Mesh(new THREE.SphereGeometry(s, 48, 32), mat);
+      m.rotation.x = .12;
+      if (u.id === 'saturn') {                         // 토성 고리 — 텍스처를 반지름 방향으로 편다
+        var rg = new THREE.RingGeometry(s * 1.25, s * 2.35, 96), pos = rg.attributes.position, uv = rg.attributes.uv, v3 = new THREE.Vector3();
+        for (var k = 0; k < pos.count; k++) { v3.fromBufferAttribute(pos, k); uv.setXY(k, (v3.length() - s * 1.25) / (s * 1.1), .5); }
+        var ring = new THREE.Mesh(rg, new THREE.MeshBasicMaterial({ map:loader.load('tex/saturn_ring.png'), side:THREE.DoubleSide, transparent:true, opacity:.9, depthWrite:false }));
+        ring.rotation.x = -Math.PI / 2 + .47; m.add(ring); m.userData.ring = ring;
+      }
+    } else {
+      var key = u.kind === 'craft' ? 'o' + s : 's' + s;
+      if (!geo[key]) geo[key] = u.kind === 'craft' ? new THREE.OctahedronGeometry(s) : new THREE.SphereGeometry(s, 22, 16);
+      m = new THREE.Mesh(geo[key], new THREE.MeshBasicMaterial({ color:baseColor(u), transparent:true, opacity:1 }));
+    }
     m.userData.i = i; scene.add(m); T.meshes.push(m); T.cur.push(new THREE.Vector3()); T.dst.push(new THREE.Vector3()); T.op.push(1); T.opDst.push(1);
-    if (u.kind === 'star') { T.glow = glow; scene.add(glow); }
+    if (u.kind === 'star') {
+      var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map:glowTexture(), color:0xffffff, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending }));
+      glow.scale.setScalar(s * 7); T.glow = glow; scene.add(glow); T.sunI = i;
+    }
   });
   camera.position.set(0, Math.cos(35 * Math.PI / 180) * 215, Math.sin(35 * Math.PI / 180) * 215);
 
@@ -100,8 +136,8 @@ function buildMap(){
     armed = null; selectBody(i); callSelected();
   });
   $('#bBack').onclick = function(){ openGroup(null); };
-  $('#bTop').onclick = function(){ tiltTo(.1); };
-  $('#bTilt').onclick = function(){ tiltTo(35); };
+  document.querySelectorAll('#vtog button').forEach(function(b){ b.onclick = function(){ setDim(b.dataset.v); }; });
+  setDim(lsGet('cosmos-view') === '2d' ? '2d' : '3d', true);
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && VIEW.gid != null && !document.querySelector('dialog[open]')) openGroup(null); });
 
   placeAll(true);
@@ -127,6 +163,9 @@ function placeAll(instant){
     if (instant) { T.cur[i].copy(T.dst[i]); T.op[i] = T.opDst[i]; }
   });
   T.ringMixDst = sys ? 1 : 0;
+  /* 행성계에서는 태양이 없으니 태양 방향 먼 곳에 빛을 둔다 */
+  if (sys) { var toSun = mainPos(center).multiplyScalar(-1).normalize(); T.lightDst.copy(toSun.multiplyScalar(80)); }
+  else T.lightDst.copy(mainPos(T.sunI));
   /* 카메라가 볼 곳 */
   var target = new THREE.Vector3(), dist = 215;
   if (mem) {
@@ -140,7 +179,7 @@ function placeAll(instant){
   flyCamera(target, dist, instant);
   $('#crumb').innerHTML = gid == null ? '태양계' : '태양계 <span>›</span> ' + esc(groupName(gid));
   $('#bBack').hidden = gid == null;
-  $('#maphint').textContent = gid == null ? '천체를 누르면 그 묶음이 펼쳐집니다 · 끌어서 돌리기' : '천체를 눌러 부르기 · Esc 나 ← 태양계로';
+  $('#maphint').textContent = gid == null ? '천체를 누르면 그 묶음이 펼쳐집니다' : '천체를 눌러 부르기 · Esc 나 ← 뒤로가기';
   drawStems();
 }
 function flyCamera(target, dist, instant){
@@ -151,11 +190,21 @@ function flyCamera(target, dist, instant){
   if (instant) { cam.position.copy(to); ctl.target.copy(target); ctl.update(); return; }
   flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:target.clone() };
 }
-function tiltTo(deg){
+/* 3D ↔ 2D — 2D 는 위에서 내려다본 채 돌리기를 막는다 */
+function setDim(v, instant){
+  var ctl = T.controls;
+  document.querySelectorAll('#vtog button').forEach(function(b){ b.classList.toggle('on', b.dataset.v === v); b.setAttribute('aria-pressed', b.dataset.v === v); });
+  lsSet('cosmos-view', v);
+  T.stems.visible = v !== '2d';                       // 위에서 보면 높이선은 짧은 금만 남아 지저분하다
+  if (v === '2d') { ctl.enableRotate = false; ctl.minPolarAngle = 0; ctl.maxPolarAngle = .001; tiltTo(.05, instant); }
+  else { ctl.enableRotate = true; ctl.maxPolarAngle = 60 * Math.PI / 180; tiltTo(35, instant); setTimeout(function(){ ctl.minPolarAngle = 15 * Math.PI / 180; }, instant ? 0 : 800); }
+}
+function tiltTo(deg, instant){
   var ctl = T.controls, cam = T.camera, off = cam.position.clone().sub(ctl.target), d = off.length();
   var az = Math.atan2(off.x, off.z), th = Math.max(.1, deg) * Math.PI / 180;
-  if (deg < 15) ctl.minPolarAngle = 0; else ctl.minPolarAngle = 15 * Math.PI / 180;
+  ctl.minPolarAngle = 0;
   var to = new THREE.Vector3(Math.sin(th) * Math.sin(az), Math.cos(th), Math.sin(th) * Math.cos(az)).multiplyScalar(d).add(ctl.target);
+  if (instant) { cam.position.copy(to); ctl.update(); return; }
   flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:ctl.target.clone() };
 }
 function openGroup(gid, focusI){
@@ -174,6 +223,7 @@ function step(){
     T.camera.position.lerpVectors(flying.p0, flying.p1, e); T.controls.target.lerpVectors(flying.t0v, flying.t1v, e);
     if (k >= 1) flying = null;
   }
+  T.light.position.lerp(T.lightDst, .12);
   T.ringMix += (T.ringMixDst - T.ringMix) * .12;
   [[T.mainRings, 1 - T.ringMix], [T.localRings, T.ringMix]].forEach(function(q){
     q[0].visible = q[1] > .02;
@@ -189,7 +239,8 @@ function step(){
     var isCenter = VIEW.gid && GROUP_META[VIEW.gid].type === 'system' && i === BY[VIEW.gid];
     var want = isCenter ? (i === HOV ? 1.7 : 1.5) : (i === HOV ? 1.7 : 1);     // 가운데 행성은 둘레 천체를 가리지 않게 덜 부푼다
     var sc = m.scale.x + (want - m.scale.x) * .25; m.scale.setScalar(sc);
-    if (U[i].kind === 'star' && T.glow) { T.glow.position.copy(m.position); T.glow.material.opacity = .12 * T.op[i]; T.glow.visible = m.visible; }
+    if (U[i].kind === 'star' && T.glow) { T.glow.position.copy(m.position); T.glow.material.opacity = T.op[i]; T.glow.visible = m.visible; }
+    if (TEX[U[i].id]) { m.rotation.y += U[i].kind === 'star' ? .0008 : .003; if (m.userData.ring) m.userData.ring.material.opacity = .9 * T.op[i]; }
   }
 }
 function drawStems(){
@@ -249,6 +300,12 @@ function drawLabels(){
     h += '<div class="' + cls + '" style="' + off + 'left:' + c.s[0].toFixed(1) + 'px;top:' + c.s[1].toFixed(1) + 'px' + (g && !g.correct ? ';color:' + heat(g.rank) : '') + '">' + esc(name) + '</div>';
   });
   var marks = '';
+  for (var ti = 0; ti < U.length; ti++) {                 // 텍스처 천체 — 부른 거리 색을 둘레 고리로
+    if (!textured(ti) || T.op[ti] < .5 || U[ti].kind === 'star' && !guessOf(U[ti].id)) continue;
+    var hc = colorOf(ti); if (hc === baseColor(U[ti])) continue;
+    var ts = screenOf(ti); if (ts[2] > 1) continue;
+    marks += '<span class="halo" style="left:' + ts[0].toFixed(1) + 'px;top:' + ts[1].toFixed(1) + 'px;border-color:#' + hc.toString(16).padStart(6, '0') + '"></span>';
+  }
   [S.lastId && !S.answer ? BY[S.lastId] : null, S.answer ? BY[S.answer.id] : null].forEach(function(i, k){
     if (i == null || T.op[i] < .5) return;
     var s = screenOf(i); if (s[2] > 1) return;
@@ -268,17 +325,22 @@ function shortName(n){ return n.replace(' 우주망원경', '').replace('국제�
 /* 올리기·고르기 — 도감 카드와 입력칸에 올린다 */
 function setHover(i){
   if (i === HOV) return;
-  if (HOV != null && T) T.meshes[HOV].material.color.setHex(colorOf(HOV));
+  if (HOV != null && T) tint(HOV, false);
   HOV = i;
-  if (i != null && T) { T.meshes[i].material.color.setHex(GOLD); showDex(i); }
+  if (i != null && T) { tint(i, true); showDex(i); }
   else showDex(SEL);
+}
+function tint(i, on){
+  var mat = T.meshes[i].material;
+  if (textured(i)) { if (mat.emissive) mat.emissive.setHex(on ? 0x4a3510 : 0x000000); else mat.color.setHex(on ? 0xfff0c8 : 0xffffff); }
+  else mat.color.setHex(on ? GOLD : colorOf(i));
 }
 function selectBody(i){
   SEL = i;
   var q = $('#q');
   q.value = i == null ? '' : U[i].name;
   $('#go').disabled = i == null || S.solved || S.gaveup || VIEW.gid == null || SKYG[i] !== VIEW.gid;
-  if (i != null) showDex(i);
+  if (i != null) showDex(i); else if (HOV == null) showDex(null);
 }
 function callSelected(){
   if (SEL == null || VIEW.gid == null || SKYG[SEL] !== VIEW.gid) return;
@@ -298,7 +360,7 @@ function colorOf(i){
 function heatHex(rank){ var m = heat(rank).match(/\d+/g); return m.slice(0, 3).map(function(v){ return (+v).toString(16).padStart(2, '0'); }).join(''); }
 function paintMap(){
   if (!T) return;
-  for (var i = 0; i < U.length; i++) if (i !== HOV) T.meshes[i].material.color.setHex(colorOf(i));
+  for (var i = 0; i < U.length; i++) if (i !== HOV && !textured(i)) T.meshes[i].material.color.setHex(colorOf(i));
   if (S.answer && VIEW.gid !== SKYG[BY[S.answer.id]]) openGroup(SKYG[BY[S.answer.id]], BY[S.answer.id]);
   $('#go').disabled = SEL == null || S.solved || S.gaveup || VIEW.gid == null;
 }
