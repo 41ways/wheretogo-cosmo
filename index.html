@@ -1351,7 +1351,7 @@ function load(){
 }
 
 var DEX = {}, IMG = {};
-Promise.all(['data/bodies.json', 'data/dex.json'].map(function(u){ return fetch(u + '?v=c4bd682bfa').then(function(r){ return r.json(); }); })).then(function(res){
+Promise.all(['data/bodies.json', 'data/dex.json'].map(function(u){ return fetch(u + '?v=0437fad991').then(function(r){ return r.json(); }); })).then(function(res){
   U = res[0].bodies;
   res[0].groups.forEach(function(g){ GROUP_META[g.id] = g; });
   DEX = res[1].dex || {}; IMG = res[1].img || {};
