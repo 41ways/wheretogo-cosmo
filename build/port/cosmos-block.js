@@ -346,6 +346,7 @@ function setHover(i){
   if (i === HOV) return;
   if (HOV != null && T) tint(HOV, false);
   HOV = i;
+  if (T) T.renderer.domElement.classList.toggle('onbody', i != null);
   if (i != null && T) { tint(i, true); showDex(i); }
   else showDex(SEL);
 }

@@ -40,7 +40,8 @@ rep('.start{margin-top:30px;border:0;background:var(--accent);color:#fff;', '.st
 rep('.go{border:0;padding:0 22px;font-weight:700;letter-spacing:.1em;background:var(--accent);color:#fff;white-space:nowrap}',
     '.go{border:0;padding:0 22px;font-weight:700;letter-spacing:.1em;background:var(--accent);color:var(--bg);white-space:nowrap}')
 rep('.map{position:relative;background:var(--sea);border:1px solid var(--line)}\n.map svg{display:block;width:100%;height:auto}', '''.map{position:relative;background:var(--sea);border:1px solid var(--line);aspect-ratio:1/1;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
-.map canvas{display:block;width:100%;height:100%;cursor:grab}
+.map canvas{display:block;width:100%;height:100%;cursor:default}
+.map canvas.onbody{cursor:pointer}
 .map canvas:active{cursor:grabbing}
 #labels{position:absolute;inset:0;pointer-events:none}
 .lb{position:absolute;transform:translate(9px,-19px);font-size:11.5px;font-weight:700;white-space:nowrap;color:#d6dcee;text-shadow:0 0 3px var(--sea),0 0 3px var(--sea),0 0 3px var(--sea)}

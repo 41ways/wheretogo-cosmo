@@ -128,7 +128,8 @@ h1 .no{font-family:var(--mono);font-size:.4em;font-weight:400;color:var(--faint)
 
 /* ── 지도 ── */
 .map{position:relative;background:var(--sea);border:1px solid var(--line);aspect-ratio:1/1;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
-.map canvas{display:block;width:100%;height:100%;cursor:grab}
+.map canvas{display:block;width:100%;height:100%;cursor:default}
+.map canvas.onbody{cursor:pointer}
 .map canvas:active{cursor:grabbing}
 #labels{position:absolute;inset:0;pointer-events:none}
 .lb{position:absolute;transform:translate(9px,-19px);font-size:11.5px;font-weight:700;white-space:nowrap;color:#d6dcee;text-shadow:0 0 3px var(--sea),0 0 3px var(--sea),0 0 3px var(--sea)}
@@ -886,6 +887,7 @@ function setHover(i){
   if (i === HOV) return;
   if (HOV != null && T) tint(HOV, false);
   HOV = i;
+  if (T) T.renderer.domElement.classList.toggle('onbody', i != null);
   if (i != null && T) { tint(i, true); showDex(i); }
   else showDex(SEL);
 }
