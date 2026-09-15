@@ -143,11 +143,18 @@ h1 .no{font-family:var(--mono);font-size:.4em;font-weight:400;color:var(--faint)
 .mbtns button{font:inherit;font-size:11.5px;font-weight:700;background:var(--panel);color:var(--ink);border:1.5px solid var(--ink);padding:5px 9px;cursor:pointer;letter-spacing:.04em}
 .mbtns button:hover{border-color:var(--accent);color:var(--accent)}
 .mbtns .back2{border-color:var(--accent);color:var(--accent)}
-.vtog{display:flex;border:1.5px solid var(--ink)}
-.mbtns .vtog button{border:0;padding:5px 10px;font-family:var(--mono);font-weight:600;color:var(--faint);background:var(--panel)}
-.mbtns .vtog button.on{background:var(--ink);color:var(--bg)}
-.mbtns .vtog button:hover{color:var(--accent);border:0}
-.mbtns .vtog button.on:hover{color:var(--bg)}
+/* 3D·2D — 아이폰 세그먼트처럼 둥근 판 위로 흰 알약이 미끄러진다 */
+.vtog{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:2px;border-radius:999px;background:rgba(118,128,160,.28);
+  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.08);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.vtog::before{content:"";position:absolute;top:2px;bottom:2px;left:2px;width:calc(50% - 2px);border-radius:999px;background:#f4f5f8;
+  box-shadow:0 3px 8px rgba(0,0,0,.28),0 1px 1px rgba(0,0,0,.18);transition:transform .32s cubic-bezier(.32,.72,0,1)}
+.vtog.is2d::before{transform:translateX(100%)}
+.mbtns .vtog button{position:relative;z-index:1;border:0;background:none;padding:5px 13px;min-width:44px;border-radius:999px;
+  font-family:var(--serif);font-size:12px;font-weight:700;letter-spacing:.02em;color:rgba(238,241,248,.72);transition:color .25s}
+.mbtns .vtog button.on{color:#0b1020}
+.mbtns .vtog button:hover{border:0;color:#fff}
+.mbtns .vtog button.on:hover{color:#0b1020}
+.mbtns .vtog button:active{transform:scale(.96)}
 #labels .halo{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:2px solid;opacity:.9}
 .maphint{position:absolute;left:12px;bottom:9px;font-size:10.5px;color:var(--faint);letter-spacing:.05em;pointer-events:none;z-index:3}
 /* 도감 */
@@ -306,7 +313,7 @@ dialog::backdrop{background:rgba(17,17,17,.38)}
     <button class="start" id="btnStart" disabled>시작</button>
     <p class="tfin num" id="tfin" hidden></p>
     <div class="modes">
-      <button class="start ghost" id="btnEasy">이지 모드</button>
+      <button class="start ghost" id="btnEasy" hidden>이지 모드</button>
       <button class="start ghost" id="btnFree">무한 모드</button>
     </div>
     <p class="tfree" id="tfree"></p>
@@ -400,7 +407,7 @@ dialog::backdrop{background:rgba(17,17,17,.38)}
       <li><b>누르기로만</b> 부릅니다. 지도에서 천체를 누르면 그 천체가 속한 <b>묶음</b>이 펼쳐지고, 펼친 화면에서 누르면 부릅니다. 손가락은 한 번 눌러 고르고 한 번 더 누르거나 부르기를 누릅니다.</li>
       <li>묶음은 <b>행성계</b>(그 행성 힐 구 안)와, 그 밖은 태양에서의 <b>거리 띠</b>(태양 곁 · 내행성 사이 · 소행성대 · 목성 궤도 · 외행성 사이 · 카이퍼대 · 태양권 너머)입니다. 날마다 실제 위치로 정해지므로 오가는 천체는 묶음이 바뀝니다. 제임스 웹·유클리드·SOHO 는 늘 지구계입니다.</li>
       <li>지도는 방향은 실제, 태양에서의 거리는 로그 눈금으로 줄였고, 천체 크기는 종류별로 정한 크기입니다. 판정은 화면과 상관없이 실제 3차원 거리로 합니다.</li>
-      <li><b>하루 한 판</b>입니다. <b>무한 모드</b>는 기록 없이 몇 판이든, <b>이지 모드</b>는 여기에 <b>실제 거리(km)</b>까지 알려 줍니다.</li>
+      <li><b>하루 한 판</b>입니다. <b>무한 모드</b>는 기록 없이 몇 판이든 할 수 있습니다.</li>
       <li>시계는 <b>첫 추측부터</b> 정답까지 서버가 잽니다. 순위는 <b>적게 부른 순</b>, 횟수가 같으면 빠른 순입니다. 포기하면 순위에 오르지 않습니다.</li>
     </ul>
   </div>
@@ -542,6 +549,7 @@ var GOLD = 0xf2c14e, PALE = 0xc9d0e6, DIM = 0x6a76a0, MOON = 0x9aa4c6;
 var SKYP = null, SKYG = null, GROUP_META = {};
 var T = null;                                   // three 상태
 var VIEW = { gid:null }, HOV = null, SEL = null, touch = false, armed = null, flying = null;
+var TILT_3D = 55, TILT_MIN = 25 * Math.PI / 180, TILT_MAX = 70 * Math.PI / 180;   // 3D 기본 기울기와 손으로 기울일 수 있는 범위
 var SIZE = { star:2.3, planet:1.1, dwarf:.66, asteroid:.36, comet:.4, craft:.44, moon:.5 };
 /* 태양·행성·달은 실제 표면 텍스처(Solar System Scope, CC BY 4.0)를 입히고 태양 쪽에서 빛을 받는다.
    크기는 실제 비율을 누그러뜨렸다 — 목성이 화성보다 커 보이되 작은 천체도 보이게 */
@@ -581,7 +589,7 @@ function buildMap(){
   var camera = new THREE.PerspectiveCamera(40, 1, .05, 3000);
   var controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true; controls.dampingFactor = .08; controls.enablePan = false;
-  controls.minPolarAngle = 15 * Math.PI / 180; controls.maxPolarAngle = 60 * Math.PI / 180;   // 살짝만 기울인다
+  controls.minPolarAngle = TILT_MIN; controls.maxPolarAngle = TILT_MAX;   // 살짝만 기울인다
   controls.rotateSpeed = .6;
   T = { renderer:renderer, scene:scene, camera:camera, controls:controls, meshes:[], rings:new THREE.Group(), stems:new THREE.Group(), cur:[], dst:[], op:[], opDst:[] };
   scene.add(T.rings); scene.add(T.stems);
@@ -642,7 +650,7 @@ function buildMap(){
       glow.scale.setScalar(s * 7); T.glow = glow; scene.add(glow); T.sunI = i;
     }
   });
-  camera.position.set(0, Math.cos(35 * Math.PI / 180) * 215, Math.sin(35 * Math.PI / 180) * 215);
+  camera.position.set(0, Math.cos(TILT_3D * Math.PI / 180) * 215, Math.sin(TILT_3D * Math.PI / 180) * 215);
 
   function resize(){ var w = stage.clientWidth, h = stage.clientHeight; if (!w) return; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
   window.addEventListener('resize', resize);
@@ -724,22 +732,35 @@ function flyCamera(target, dist, instant){
   if (instant) { cam.position.copy(to); ctl.target.copy(target); ctl.update(); return; }
   flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:target.clone() };
 }
-/* 3D ↔ 2D — 2D 는 위에서 내려다본 채 돌리기를 막는다 */
+/* 3D ↔ 2D — 거리는 그대로 두고 기울기만 둥글게 바꾼다. 기울기 한도는 움직임이 끝난 뒤에 건다
+   (먼저 걸면 OrbitControls 가 카메라를 한도 안으로 툭 끌어당겨 어색하다) */
 function setDim(v, instant){
   var ctl = T.controls;
   document.querySelectorAll('#vtog button').forEach(function(b){ b.classList.toggle('on', b.dataset.v === v); b.setAttribute('aria-pressed', b.dataset.v === v); });
+  $('#vtog').classList.toggle('is2d', v === '2d');
   lsSet('cosmos-view', v);
   T.stems.visible = v !== '2d';                       // 위에서 보면 높이선은 짧은 금만 남아 지저분하다
-  if (v === '2d') { ctl.enableRotate = false; ctl.minPolarAngle = 0; ctl.maxPolarAngle = .001; tiltTo(.05, instant); }
-  else { ctl.enableRotate = true; ctl.maxPolarAngle = 60 * Math.PI / 180; tiltTo(35, instant); setTimeout(function(){ ctl.minPolarAngle = 15 * Math.PI / 180; }, instant ? 0 : 800); }
+  T.dim = v;
+  ctl.enableRotate = false; ctl.minPolarAngle = 0; ctl.maxPolarAngle = Math.PI / 2;
+  tiltTo(v === '2d' ? .02 : TILT_3D, instant, function(){
+    if (v === '2d') { ctl.minPolarAngle = 0; ctl.maxPolarAngle = .0004; }
+    else { ctl.enableRotate = true; ctl.minPolarAngle = TILT_MIN; ctl.maxPolarAngle = TILT_MAX; }
+  });
 }
-function tiltTo(deg, instant){
-  var ctl = T.controls, cam = T.camera, off = cam.position.clone().sub(ctl.target), d = off.length();
-  var az = Math.atan2(off.x, off.z), th = Math.max(.1, deg) * Math.PI / 180;
-  ctl.minPolarAngle = 0;
-  var to = new THREE.Vector3(Math.sin(th) * Math.sin(az), Math.cos(th), Math.sin(th) * Math.cos(az)).multiplyScalar(d).add(ctl.target);
-  if (instant) { cam.position.copy(to); ctl.update(); return; }
-  flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:ctl.target.clone() };
+function tiltTo(deg, instant, done){
+  var ctl = T.controls, cam = T.camera, off = cam.position.clone().sub(ctl.target);
+  var sph = new THREE.Spherical().setFromVector3(off), to = deg * Math.PI / 180;
+  if (instant) { sph.phi = to; cam.position.copy(ctl.target).add(new THREE.Vector3().setFromSpherical(sph)); ctl.update(); if (done) done(); return; }
+  flying = { tilt:true, t0:performance.now(), phi0:sph.phi, phi1:to, r:sph.radius, theta:sph.theta, done:done };
+}
+/* 새 판 — 태양계 전체 화면, 고른 것·올린 것 없이. 오늘 판에서 펼친 행성계가 이어지지 않게 */
+function resetView(){
+  if (!T) return;
+  VIEW.gid = null; armed = null;
+  setHover(null); selectBody(null);
+  placeAll(true);
+  T.ringMix = T.ringMixDst; T.light.position.copy(T.lightDst);
+  paintMap();
 }
 function openGroup(gid, focusI){
   VIEW.gid = gid; armed = null;
@@ -752,7 +773,12 @@ function openGroup(gid, focusI){
 /* 한 프레임 — 자리·투명도·크기를 목표로 조금씩 */
 function step(){
   var now = performance.now();
-  if (flying) {
+  if (flying && flying.tilt) {
+    var kt = Math.min(1, (now - flying.t0) / 650), et = 1 - Math.pow(1 - kt, 3);          // 빨리 출발해 부드럽게 멈춘다
+    var sp = new THREE.Spherical(flying.r, flying.phi0 + (flying.phi1 - flying.phi0) * et, flying.theta);
+    T.camera.position.copy(T.controls.target).add(new THREE.Vector3().setFromSpherical(sp));
+    if (kt >= 1) { var dn = flying.done; flying = null; if (dn) dn(); }
+  } else if (flying) {
     var k = Math.min(1, (now - flying.t0) / 750), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     T.camera.position.lerpVectors(flying.p0, flying.p1, e); T.controls.target.lerpVectors(flying.t0v, flying.t1v, e);
     if (k >= 1) flying = null;
@@ -1308,6 +1334,7 @@ function endFree(){
 function startGame(){
   $('#title').hidden = true;
   $('#game').hidden = false;
+  resetView();
   render();
   if (!S.solved && !S.gaveup && matchMedia('(hover:hover)').matches) $('#q').focus();
 }

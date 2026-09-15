@@ -8,6 +8,7 @@ var GOLD = 0xf2c14e, PALE = 0xc9d0e6, DIM = 0x6a76a0, MOON = 0x9aa4c6;
 var SKYP = null, SKYG = null, GROUP_META = {};
 var T = null;                                   // three 상태
 var VIEW = { gid:null }, HOV = null, SEL = null, touch = false, armed = null, flying = null;
+var TILT_3D = 55, TILT_MIN = 25 * Math.PI / 180, TILT_MAX = 70 * Math.PI / 180;   // 3D 기본 기울기와 손으로 기울일 수 있는 범위
 var SIZE = { star:2.3, planet:1.1, dwarf:.66, asteroid:.36, comet:.4, craft:.44, moon:.5 };
 /* 태양·행성·달은 실제 표면 텍스처(Solar System Scope, CC BY 4.0)를 입히고 태양 쪽에서 빛을 받는다.
    크기는 실제 비율을 누그러뜨렸다 — 목성이 화성보다 커 보이되 작은 천체도 보이게 */
@@ -47,7 +48,7 @@ function buildMap(){
   var camera = new THREE.PerspectiveCamera(40, 1, .05, 3000);
   var controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true; controls.dampingFactor = .08; controls.enablePan = false;
-  controls.minPolarAngle = 15 * Math.PI / 180; controls.maxPolarAngle = 60 * Math.PI / 180;   // 살짝만 기울인다
+  controls.minPolarAngle = TILT_MIN; controls.maxPolarAngle = TILT_MAX;   // 살짝만 기울인다
   controls.rotateSpeed = .6;
   T = { renderer:renderer, scene:scene, camera:camera, controls:controls, meshes:[], rings:new THREE.Group(), stems:new THREE.Group(), cur:[], dst:[], op:[], opDst:[] };
   scene.add(T.rings); scene.add(T.stems);
@@ -108,7 +109,7 @@ function buildMap(){
       glow.scale.setScalar(s * 7); T.glow = glow; scene.add(glow); T.sunI = i;
     }
   });
-  camera.position.set(0, Math.cos(35 * Math.PI / 180) * 215, Math.sin(35 * Math.PI / 180) * 215);
+  camera.position.set(0, Math.cos(TILT_3D * Math.PI / 180) * 215, Math.sin(TILT_3D * Math.PI / 180) * 215);
 
   function resize(){ var w = stage.clientWidth, h = stage.clientHeight; if (!w) return; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
   window.addEventListener('resize', resize);
@@ -190,22 +191,35 @@ function flyCamera(target, dist, instant){
   if (instant) { cam.position.copy(to); ctl.target.copy(target); ctl.update(); return; }
   flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:target.clone() };
 }
-/* 3D ↔ 2D — 2D 는 위에서 내려다본 채 돌리기를 막는다 */
+/* 3D ↔ 2D — 거리는 그대로 두고 기울기만 둥글게 바꾼다. 기울기 한도는 움직임이 끝난 뒤에 건다
+   (먼저 걸면 OrbitControls 가 카메라를 한도 안으로 툭 끌어당겨 어색하다) */
 function setDim(v, instant){
   var ctl = T.controls;
   document.querySelectorAll('#vtog button').forEach(function(b){ b.classList.toggle('on', b.dataset.v === v); b.setAttribute('aria-pressed', b.dataset.v === v); });
+  $('#vtog').classList.toggle('is2d', v === '2d');
   lsSet('cosmos-view', v);
   T.stems.visible = v !== '2d';                       // 위에서 보면 높이선은 짧은 금만 남아 지저분하다
-  if (v === '2d') { ctl.enableRotate = false; ctl.minPolarAngle = 0; ctl.maxPolarAngle = .001; tiltTo(.05, instant); }
-  else { ctl.enableRotate = true; ctl.maxPolarAngle = 60 * Math.PI / 180; tiltTo(35, instant); setTimeout(function(){ ctl.minPolarAngle = 15 * Math.PI / 180; }, instant ? 0 : 800); }
+  T.dim = v;
+  ctl.enableRotate = false; ctl.minPolarAngle = 0; ctl.maxPolarAngle = Math.PI / 2;
+  tiltTo(v === '2d' ? .02 : TILT_3D, instant, function(){
+    if (v === '2d') { ctl.minPolarAngle = 0; ctl.maxPolarAngle = .0004; }
+    else { ctl.enableRotate = true; ctl.minPolarAngle = TILT_MIN; ctl.maxPolarAngle = TILT_MAX; }
+  });
 }
-function tiltTo(deg, instant){
-  var ctl = T.controls, cam = T.camera, off = cam.position.clone().sub(ctl.target), d = off.length();
-  var az = Math.atan2(off.x, off.z), th = Math.max(.1, deg) * Math.PI / 180;
-  ctl.minPolarAngle = 0;
-  var to = new THREE.Vector3(Math.sin(th) * Math.sin(az), Math.cos(th), Math.sin(th) * Math.cos(az)).multiplyScalar(d).add(ctl.target);
-  if (instant) { cam.position.copy(to); ctl.update(); return; }
-  flying = { t0:performance.now(), p0:cam.position.clone(), t0v:ctl.target.clone(), p1:to, t1v:ctl.target.clone() };
+function tiltTo(deg, instant, done){
+  var ctl = T.controls, cam = T.camera, off = cam.position.clone().sub(ctl.target);
+  var sph = new THREE.Spherical().setFromVector3(off), to = deg * Math.PI / 180;
+  if (instant) { sph.phi = to; cam.position.copy(ctl.target).add(new THREE.Vector3().setFromSpherical(sph)); ctl.update(); if (done) done(); return; }
+  flying = { tilt:true, t0:performance.now(), phi0:sph.phi, phi1:to, r:sph.radius, theta:sph.theta, done:done };
+}
+/* 새 판 — 태양계 전체 화면, 고른 것·올린 것 없이. 오늘 판에서 펼친 행성계가 이어지지 않게 */
+function resetView(){
+  if (!T) return;
+  VIEW.gid = null; armed = null;
+  setHover(null); selectBody(null);
+  placeAll(true);
+  T.ringMix = T.ringMixDst; T.light.position.copy(T.lightDst);
+  paintMap();
 }
 function openGroup(gid, focusI){
   VIEW.gid = gid; armed = null;
@@ -218,7 +232,12 @@ function openGroup(gid, focusI){
 /* 한 프레임 — 자리·투명도·크기를 목표로 조금씩 */
 function step(){
   var now = performance.now();
-  if (flying) {
+  if (flying && flying.tilt) {
+    var kt = Math.min(1, (now - flying.t0) / 650), et = 1 - Math.pow(1 - kt, 3);          // 빨리 출발해 부드럽게 멈춘다
+    var sp = new THREE.Spherical(flying.r, flying.phi0 + (flying.phi1 - flying.phi0) * et, flying.theta);
+    T.camera.position.copy(T.controls.target).add(new THREE.Vector3().setFromSpherical(sp));
+    if (kt >= 1) { var dn = flying.done; flying = null; if (dn) dn(); }
+  } else if (flying) {
     var k = Math.min(1, (now - flying.t0) / 750), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     T.camera.position.lerpVectors(flying.p0, flying.p1, e); T.controls.target.lerpVectors(flying.t0v, flying.t1v, e);
     if (k >= 1) flying = null;

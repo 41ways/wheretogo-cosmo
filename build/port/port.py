@@ -55,11 +55,18 @@ rep('.map{position:relative;background:var(--sea);border:1px solid var(--line)}\
 .mbtns button{font:inherit;font-size:11.5px;font-weight:700;background:var(--panel);color:var(--ink);border:1.5px solid var(--ink);padding:5px 9px;cursor:pointer;letter-spacing:.04em}
 .mbtns button:hover{border-color:var(--accent);color:var(--accent)}
 .mbtns .back2{border-color:var(--accent);color:var(--accent)}
-.vtog{display:flex;border:1.5px solid var(--ink)}
-.mbtns .vtog button{border:0;padding:5px 10px;font-family:var(--mono);font-weight:600;color:var(--faint);background:var(--panel)}
-.mbtns .vtog button.on{background:var(--ink);color:var(--bg)}
-.mbtns .vtog button:hover{color:var(--accent);border:0}
-.mbtns .vtog button.on:hover{color:var(--bg)}
+/* 3D·2D — 아이폰 세그먼트처럼 둥근 판 위로 흰 알약이 미끄러진다 */
+.vtog{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:2px;border-radius:999px;background:rgba(118,128,160,.28);
+  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.08);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.vtog::before{content:"";position:absolute;top:2px;bottom:2px;left:2px;width:calc(50% - 2px);border-radius:999px;background:#f4f5f8;
+  box-shadow:0 3px 8px rgba(0,0,0,.28),0 1px 1px rgba(0,0,0,.18);transition:transform .32s cubic-bezier(.32,.72,0,1)}
+.vtog.is2d::before{transform:translateX(100%)}
+.mbtns .vtog button{position:relative;z-index:1;border:0;background:none;padding:5px 13px;min-width:44px;border-radius:999px;
+  font-family:var(--serif);font-size:12px;font-weight:700;letter-spacing:.02em;color:rgba(238,241,248,.72);transition:color .25s}
+.mbtns .vtog button.on{color:#0b1020}
+.mbtns .vtog button:hover{border:0;color:#fff}
+.mbtns .vtog button.on:hover{color:#0b1020}
+.mbtns .vtog button:active{transform:scale(.96)}
 #labels .halo{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:2px solid;opacity:.9}
 .maphint{position:absolute;left:12px;bottom:9px;font-size:10.5px;color:var(--faint);letter-spacing:.05em;pointer-events:none;z-index:3}
 /* 도감 */
@@ -123,9 +130,15 @@ block('      <li>매일 자정(한국 시간)에 전국', '    </ul>', '''      
       <li><b>누르기로만</b> 부릅니다. 지도에서 천체를 누르면 그 천체가 속한 <b>묶음</b>이 펼쳐지고, 펼친 화면에서 누르면 부릅니다. 손가락은 한 번 눌러 고르고 한 번 더 누르거나 부르기를 누릅니다.</li>
       <li>묶음은 <b>행성계</b>(그 행성 힐 구 안)와, 그 밖은 태양에서의 <b>거리 띠</b>(태양 곁 · 내행성 사이 · 소행성대 · 목성 궤도 · 외행성 사이 · 카이퍼대 · 태양권 너머)입니다. 날마다 실제 위치로 정해지므로 오가는 천체는 묶음이 바뀝니다. 제임스 웹·유클리드·SOHO 는 늘 지구계입니다.</li>
       <li>지도는 방향은 실제, 태양에서의 거리는 로그 눈금으로 줄였고, 천체 크기는 종류별로 정한 크기입니다. 판정은 화면과 상관없이 실제 3차원 거리로 합니다.</li>
-      <li><b>하루 한 판</b>입니다. <b>무한 모드</b>는 기록 없이 몇 판이든, <b>이지 모드</b>는 여기에 <b>실제 거리(km)</b>까지 알려 줍니다.</li>
+      <li><b>하루 한 판</b>입니다. <b>무한 모드</b>는 기록 없이 몇 판이든 할 수 있습니다.</li>
       <li>시계는 <b>첫 추측부터</b> 정답까지 서버가 잽니다. 순위는 <b>적게 부른 순</b>, 횟수가 같으면 빠른 순입니다. 포기하면 순위에 오르지 않습니다.</li>
 ''')
+
+# ── 이지 모드 없음 — 이름을 보고 누르는 게임이라 따로 쉬운 판이 필요 없다
+rep('<button class="start ghost" id="btnEasy">이지 모드</button>', '<button class="start ghost" id="btnEasy" hidden>이지 모드</button>')
+
+# ── 새 판을 열 때마다 태양계 전체 화면으로 — 오늘 판에서 펼친 행성계가 무한 모드로 이어지지 않게
+rep("function startGame(){\n  $('#title').hidden = true;\n  $('#game').hidden = false;", "function startGame(){\n  $('#title').hidden = true;\n  $('#game').hidden = false;\n  resetView();")
 
 # ── 스크립트
 rep('<script>\n(function(){', '<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>\n<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>\n<script>\n(function(){')
