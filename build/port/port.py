@@ -55,18 +55,17 @@ rep('.map{position:relative;background:var(--sea);border:1px solid var(--line)}\
 .mbtns button{font:inherit;font-size:11.5px;font-weight:700;background:var(--panel);color:var(--ink);border:1.5px solid var(--ink);padding:5px 9px;cursor:pointer;letter-spacing:.04em}
 .mbtns button:hover{border-color:var(--accent);color:var(--accent)}
 .mbtns .back2{border-color:var(--accent);color:var(--accent)}
-/* 3D·2D — 아이폰 세그먼트처럼 둥근 판 위로 흰 알약이 미끄러진다 */
-.vtog{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:2px;border-radius:999px;background:rgba(118,128,160,.28);
-  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.08);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.vtog::before{content:"";position:absolute;top:2px;bottom:2px;left:2px;width:calc(50% - 2px);border-radius:999px;background:#f4f5f8;
-  box-shadow:0 3px 8px rgba(0,0,0,.28),0 1px 1px rgba(0,0,0,.18);transition:transform .32s cubic-bezier(.32,.72,0,1)}
-.vtog.is2d::before{transform:translateX(100%)}
-.mbtns .vtog button{position:relative;z-index:1;border:0;background:none;padding:5px 13px;min-width:44px;border-radius:999px;
-  font-family:var(--serif);font-size:12px;font-weight:700;letter-spacing:.02em;color:rgba(238,241,248,.72);transition:color .25s}
-.mbtns .vtog button.on{color:#0b1020}
-.mbtns .vtog button:hover{border:0;color:#fff}
-.mbtns .vtog button.on:hover{color:#0b1020}
-.mbtns .vtog button:active{transform:scale(.96)}
+/* 3D·2D — 금색 밑줄이 고른 쪽 아래로 미끄러진다 */
+.vtog{position:relative;display:grid;grid-template-columns:1fr 1fr;align-self:flex-end;padding:0 0 5px}
+.vtog::after{content:"/";position:absolute;left:50%;top:5px;transform:translateX(-50%);font-family:var(--mono);font-size:13px;color:#3a4570;pointer-events:none}
+.vtog::before{content:"";position:absolute;bottom:0;left:calc(25% - 12px);width:24px;height:3px;background:var(--accent);
+  box-shadow:0 0 8px rgba(242,193,78,.6);transition:left .34s cubic-bezier(.32,.72,0,1)}
+.vtog.is2d::before{left:calc(75% - 12px)}
+.mbtns .vtog button{border:0;background:none;padding:5px 12px 3px;min-width:46px;font-family:var(--mono);font-size:13px;font-weight:600;
+  letter-spacing:.08em;color:var(--faint);text-shadow:0 0 6px #070b18;transition:color .25s}
+.mbtns .vtog button.on{color:var(--ink)}
+.mbtns .vtog button:hover{border:0;color:var(--accent)}
+.mbtns .vtog button.on:hover{color:var(--ink)}
 #labels .halo{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:2px solid;opacity:.9}
 .maphint{position:absolute;left:12px;bottom:9px;font-size:10.5px;color:var(--faint);letter-spacing:.05em;pointer-events:none;z-index:3}
 /* 도감 */
