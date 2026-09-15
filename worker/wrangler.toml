@@ -1,0 +1,18 @@
+# 행선지3 — 정답·점수·순위 서버 (Cloudflare Workers 무료 플랜 + D1)
+#
+# 정답은 이 서버만 안다. 브라우저는 누른 천체를 보내고 가까운 순서·점수만 돌려받는다.
+# 거리는 그날(한국 시간 정오) 실제 위치로 잰다 — 위치는 D1 pos 표 (build/build_pos.py → raw/pos.sql)
+#   npx wrangler secret put ANSWER_SALT
+name = "wheretogo-cosmos"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+workers_dev = true
+preview_urls = false
+
+[vars]
+ALLOW_ORIGINS = "https://41ways.github.io"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "wheretogo-cosmos"
+database_id = "472493db-aafb-48cc-a53e-a965a4117031"

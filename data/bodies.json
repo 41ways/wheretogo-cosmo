@@ -1,0 +1,864 @@
+{
+ "day0": 20711,
+ "days": 1097,
+ "bodies": [
+  {
+   "id": "sun",
+   "name": "태양",
+   "kind": "star",
+   "parent": null
+  },
+  {
+   "id": "mercury",
+   "name": "수성",
+   "kind": "planet",
+   "parent": null
+  },
+  {
+   "id": "venus",
+   "name": "금성",
+   "kind": "planet",
+   "parent": null
+  },
+  {
+   "id": "earth",
+   "name": "지구",
+   "kind": "planet",
+   "parent": null
+  },
+  {
+   "id": "mars",
+   "name": "화성",
+   "kind": "planet",
+   "parent": null
+  },
+  {
+   "id": "jupiter",
+   "name": "목성",
+   "kind": "planet",
+   "parent": null
+  },
+  {
+   "id": "saturn",
+   "name": "토성",
+   "kind": "planet",
+   "parent": null
+  },
+  {
+   "id": "uranus",
+   "name": "천왕성",
+   "kind": "planet",
+   "parent": null
+  },
+  {
+   "id": "neptune",
+   "name": "해왕성",
+   "kind": "planet",
+   "parent": null
+  },
+  {
+   "id": "ceres",
+   "name": "세레스",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "pluto",
+   "name": "명왕성",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "haumea",
+   "name": "하우메아",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "makemake",
+   "name": "마케마케",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "eris",
+   "name": "에리스",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "sedna",
+   "name": "세드나",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "quaoar",
+   "name": "콰오아",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "gonggong",
+   "name": "공공",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "orcus",
+   "name": "오르쿠스",
+   "kind": "dwarf",
+   "parent": null
+  },
+  {
+   "id": "moon",
+   "name": "달",
+   "kind": "moon",
+   "parent": "earth"
+  },
+  {
+   "id": "phobos",
+   "name": "포보스",
+   "kind": "moon",
+   "parent": "mars"
+  },
+  {
+   "id": "deimos",
+   "name": "데이모스",
+   "kind": "moon",
+   "parent": "mars"
+  },
+  {
+   "id": "io",
+   "name": "이오",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "europa",
+   "name": "유로파",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "ganymede",
+   "name": "가니메데",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "callisto",
+   "name": "칼리스토",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "amalthea",
+   "name": "아말테아",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "himalia",
+   "name": "히말리아",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "elara",
+   "name": "엘라라",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "pasiphae",
+   "name": "파시파에",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "thebe",
+   "name": "테베",
+   "kind": "moon",
+   "parent": "jupiter"
+  },
+  {
+   "id": "mimas",
+   "name": "미마스",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "enceladus",
+   "name": "엔켈라두스",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "tethys",
+   "name": "테티스",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "dione",
+   "name": "디오네",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "rhea",
+   "name": "레아",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "titan",
+   "name": "타이탄",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "hyperion",
+   "name": "히페리온",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "iapetus",
+   "name": "이아페투스",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "phoebe",
+   "name": "포에베",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "janus",
+   "name": "야누스",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "epimetheus",
+   "name": "에피메테우스",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "prometheus",
+   "name": "프로메테우스",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "pandora",
+   "name": "판도라",
+   "kind": "moon",
+   "parent": "saturn"
+  },
+  {
+   "id": "ariel",
+   "name": "아리엘",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "umbriel",
+   "name": "움브리엘",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "titania",
+   "name": "티타니아",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "oberon",
+   "name": "오베론",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "miranda",
+   "name": "미란다",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "puck",
+   "name": "퍽",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "portia",
+   "name": "포르티아",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "juliet",
+   "name": "줄리엣",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "belinda",
+   "name": "벨린다",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "cressida",
+   "name": "크레시다",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "rosalind",
+   "name": "로잘린드",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "desdemona",
+   "name": "데스데모나",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "sycorax",
+   "name": "시코락스",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "caliban",
+   "name": "칼리반",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "bianca",
+   "name": "비앙카",
+   "kind": "moon",
+   "parent": "uranus"
+  },
+  {
+   "id": "triton",
+   "name": "트리톤",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "nereid",
+   "name": "네레이드",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "proteus",
+   "name": "프로테우스",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "larissa",
+   "name": "라리사",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "galatea",
+   "name": "갈라테아",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "despina",
+   "name": "데스피나",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "thalassa",
+   "name": "탈라사",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "naiad",
+   "name": "나이아드",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "halimede",
+   "name": "할리메데",
+   "kind": "moon",
+   "parent": "neptune"
+  },
+  {
+   "id": "charon",
+   "name": "카론",
+   "kind": "moon",
+   "parent": "pluto"
+  },
+  {
+   "id": "nix",
+   "name": "닉스",
+   "kind": "moon",
+   "parent": "pluto"
+  },
+  {
+   "id": "hydra",
+   "name": "히드라",
+   "kind": "moon",
+   "parent": "pluto"
+  },
+  {
+   "id": "vesta",
+   "name": "베스타",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "pallas",
+   "name": "팔라스",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "juno_a",
+   "name": "주노",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "hygiea",
+   "name": "히기에이아",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "eros",
+   "name": "에로스",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "itokawa",
+   "name": "이토카와",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "ryugu",
+   "name": "류구",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "bennu",
+   "name": "베누",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "apophis",
+   "name": "아포피스",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "psyche",
+   "name": "프시케",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "didymos",
+   "name": "디디모스",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "lutetia",
+   "name": "루테티아",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "ida",
+   "name": "이다",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "gaspra",
+   "name": "가스프라",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "mathilde",
+   "name": "마틸드",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "eugenia",
+   "name": "에우게니아",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "davida",
+   "name": "다비다",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "interamnia",
+   "name": "인테람니아",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "patroclus",
+   "name": "파트로클로스",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "eurybates",
+   "name": "에우리바테스",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "dinkinesh",
+   "name": "딘키네시",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "steins",
+   "name": "스테인스",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "toutatis",
+   "name": "토타티스",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "phaethon",
+   "name": "파에톤",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "kleopatra",
+   "name": "클레오파트라",
+   "kind": "asteroid",
+   "parent": null
+  },
+  {
+   "id": "halley",
+   "name": "핼리 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "encke",
+   "name": "엔케 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "tempel1",
+   "name": "템펠 1 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "wild2",
+   "name": "와일드 2 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "cg67p",
+   "name": "추류모프-게라시멘코 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "hartley2",
+   "name": "하틀리 2 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "swifttuttle",
+   "name": "스위프트-터틀 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "halebopp",
+   "name": "헤일-밥 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "neowise",
+   "name": "네오와이즈 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "tsuchinshan",
+   "name": "쯔진산-아틀라스 혜성",
+   "kind": "comet",
+   "parent": null
+  },
+  {
+   "id": "voyager1",
+   "name": "보이저 1호",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "voyager2",
+   "name": "보이저 2호",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "newhorizons",
+   "name": "뉴호라이즌스",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "pioneer10",
+   "name": "파이오니어 10호",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "pioneer11",
+   "name": "파이오니어 11호",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "jwst",
+   "name": "제임스 웹 우주망원경",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "parker",
+   "name": "파커 태양 탐사선",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "junoprobe",
+   "name": "주노 탐사선",
+   "kind": "craft",
+   "parent": "jupiter"
+  },
+  {
+   "id": "iss",
+   "name": "국제우주정거장(ISS)",
+   "kind": "craft",
+   "parent": "earth"
+  },
+  {
+   "id": "tiangong",
+   "name": "톈궁",
+   "kind": "craft",
+   "parent": "earth"
+  },
+  {
+   "id": "hubble",
+   "name": "허블 우주망원경",
+   "kind": "craft",
+   "parent": "earth"
+  },
+  {
+   "id": "danuri",
+   "name": "다누리",
+   "kind": "craft",
+   "parent": "moon"
+  },
+  {
+   "id": "euclid",
+   "name": "유클리드",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "soho",
+   "name": "SOHO",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "clipper",
+   "name": "에우로파 클리퍼",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "juice",
+   "name": "주스(JUICE)",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "lucy",
+   "name": "루시",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "psycheprobe",
+   "name": "프시케 탐사선",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "hera",
+   "name": "헤라",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "bepi",
+   "name": "베피콜롬보",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "solo",
+   "name": "솔라 오비터",
+   "kind": "craft",
+   "parent": null
+  },
+  {
+   "id": "roadster",
+   "name": "테슬라 로드스터",
+   "kind": "craft",
+   "parent": null
+  }
+ ],
+ "groups": [
+  {
+   "id": "mercury",
+   "name": "수성계",
+   "type": "system"
+  },
+  {
+   "id": "venus",
+   "name": "금성계",
+   "type": "system"
+  },
+  {
+   "id": "earth",
+   "name": "지구계",
+   "type": "system"
+  },
+  {
+   "id": "mars",
+   "name": "화성계",
+   "type": "system"
+  },
+  {
+   "id": "jupiter",
+   "name": "목성계",
+   "type": "system"
+  },
+  {
+   "id": "saturn",
+   "name": "토성계",
+   "type": "system"
+  },
+  {
+   "id": "uranus",
+   "name": "천왕성계",
+   "type": "system"
+  },
+  {
+   "id": "neptune",
+   "name": "해왕성계",
+   "type": "system"
+  },
+  {
+   "id": "pluto",
+   "name": "명왕성계",
+   "type": "system"
+  },
+  {
+   "id": "sunside",
+   "name": "태양 곁",
+   "type": "band",
+   "from": 0,
+   "to": 0.75
+  },
+  {
+   "id": "inner",
+   "name": "내행성 사이",
+   "type": "band",
+   "from": 0.75,
+   "to": 1.8
+  },
+  {
+   "id": "belt",
+   "name": "소행성대",
+   "type": "band",
+   "from": 1.8,
+   "to": 4.2
+  },
+  {
+   "id": "trojan",
+   "name": "목성 궤도",
+   "type": "band",
+   "from": 4.2,
+   "to": 6.5
+  },
+  {
+   "id": "outer",
+   "name": "외행성 사이",
+   "type": "band",
+   "from": 6.5,
+   "to": 32
+  },
+  {
+   "id": "kuiper",
+   "name": "카이퍼대",
+   "type": "band",
+   "from": 32,
+   "to": 60
+  },
+  {
+   "id": "beyond",
+   "name": "태양권 너머",
+   "type": "band",
+   "from": 60,
+   "to": null
+  }
+ ]
+}
